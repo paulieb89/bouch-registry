@@ -32,7 +32,10 @@ uv run pytest
 uv run bouch-registry validate
 uv run bouch-registry serve --port 8080
 scripts/inspector-smoke.sh http://127.0.0.1:8080/mcp
+scripts/remote-acceptance.sh https://registry.bouch.dev
 ```
 
-Not deployed. Do not deploy, configure bouch.dev DNS or publish to the MCP
-Registry without explicit approval.
+Deployed as the Fly app `bouch-registry` at https://registry.bouch.dev — see
+README "Deployment". Deploy only through `.github/workflows/deploy.yml`, never
+`flyctl deploy` from a checkout. Do not publish to the MCP Registry or change
+bouch.dev DNS beyond the registry hostname without explicit approval.

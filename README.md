@@ -11,8 +11,9 @@ not a package manager, installer, orchestrator or copy of native manifests, and
 it holds no live state (versions, tool counts, git or runtime status) — derive
 those from the systems themselves.
 
-Intended service identity: `https://registry.bouch.dev/` with MCP at `/mcp`
-and the static registry at `/registry.json`. Not deployed yet.
+Service identity: `https://registry.bouch.dev/` — `/health`, `/registry.json`
+and MCP at `/mcp`. `https://bouch-registry.fly.dev/` serves the same app and is
+the origin the custom domain points at.
 
 ## Data
 
@@ -94,6 +95,31 @@ uv sync --group dev
 uv run bouch-registry serve --port 8080       # MCP + /registry.json
 uv run bouch-registry validate
 uv run bouch-registry export registry.json    # static copy, e.g. for static hosting
-uv run pytest                                 # offline: model, search, portability, MCP in-memory + HTTP
-scripts/inspector-smoke.sh http://127.0.0.1:8080/mcp   # independent client (MCP Inspector CLI)
+uv run pytest                                 # offline: model, search, portability, CLI, MCP in-memory + HTTP
+scripts/inspector-smoke.sh http://127.0.0.1:8080/mcp     # independent client (MCP Inspector CLI)
+scripts/remote-acceptance.sh https://registry.bouch.dev  # the deployed boundary
 ```
+
+## Deployment
+
+One Fly.io app, `bouch-registry` in `lhr`, running the container in
+`Dockerfile`: the package is installed, `registry/` is copied beside it, and
+the service is started with `--data /app/registry` so a running container
+cannot serve any other copy of the dataset. `/health` reports the capability
+and domain counts it loaded, so a stale or truncated deployment is visible
+without opening the data.
+
+Deploys run in GitHub Actions (`.github/workflows/deploy.yml`): tests and
+`validate`, then `flyctl deploy`. Publishing a GitHub release deploys that
+release; `workflow_dispatch` redeploys `main`. Do not deploy from a laptop —
+the live service should always correspond to a commit on `main`. There is no
+PyPI package: this is a service over a dataset, not a library.
+
+`registry.bouch.dev` is a DNS-only (unproxied) CNAME in Cloudflare to the
+app's Fly hostname, with the certificate issued by Fly. Proxying it would
+break both certificate validation and the held-open `GET /mcp` event stream
+that claude.ai's connector opens.
+
+The registry holds no record of itself: a record's job is to point at a
+versioned source and its entrypoints, and a deployment URL is live state,
+which records do not carry. `bouch-registry`'s own source is this repository.
