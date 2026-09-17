@@ -1,0 +1,19 @@
+{
+  "id": "dev.bouch/capability-routing-index",
+  "type": "routing-pointer",
+  "title": "Capability routing index and cross-domain harness model",
+  "summary": "Pointer document routing to where each Bouch domain's harness facts live (Battlebuild/asset work, REAPER/audio, UK legal, UK due diligence, linear media), alongside the frozen cross-domain harness model and /prime contract it cites. Its pointers are checkout paths on the authoring machine, so treat them as hints to resolve, not portable identities.",
+  "domains": ["agent-harness", "audio"],
+  "tags": ["routing", "index", "cross-domain", "prime", "harness-model"],
+  "lifecycle": "active",
+  "source": {
+    "repository": "cc-session-inspector",
+    "note": "Not yet published to a remote repository. The harness model and prime contract are frozen at the cited tag; the routing index was added after it."
+  },
+  "entrypoints": [
+    {"role": "knowledge", "path": "docs/research/capability-routing-index.md", "title": "Capability routing index"},
+    {"role": "knowledge", "path": "docs/research/cross-domain-harness-model-v1.md", "title": "Cross-domain harness model V1 (frozen at v0-cross-domain-harness-freeze-2026-09-15)"},
+    {"role": "knowledge", "path": "docs/research/prime-contract-v1.md", "title": "Prime contract V1 (frozen at v0-cross-domain-harness-freeze-2026-09-15)"}
+  ],
+  "related": ["dev.bouch/bouch-agent-core", "dev.bouch/sessinspect", "dev.bouch/audio-agent-workbench-v2"]
+}

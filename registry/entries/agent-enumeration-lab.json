@@ -1,0 +1,23 @@
+{
+  "id": "dev.bouch/agent-enumeration-lab",
+  "type": "evidence-repository",
+  "title": "Agent Enumeration Lab",
+  "summary": "Bouch's research and evidence layer for agent standards, harnesses, MCP, Skills, plugins and protocols. Consult before researching a standard or ecosystem from scratch: source records pin what was inspected and when, findings carry lifecycle status (ENUMERATED, VALIDATED, PROMOTED), and probes hold the real validator and CLI runs behind each claim.",
+  "domains": ["agent-harness"],
+  "tags": ["research", "standards", "agent-plugins", "agent-skills", "provenance", "enumeration", "probes"],
+  "lifecycle": "active",
+  "source": {
+    "repository": "agent-enumeration-lab",
+    "note": "Not yet published to a remote repository."
+  },
+  "entrypoints": [
+    {"role": "contract", "path": "CLAUDE.md", "title": "Lab operating rules and lifecycle states"},
+    {"role": "knowledge", "path": "sources/records/README.md", "title": "Pinned source records"},
+    {"role": "skill", "path": ".claude/skills/enumerate-source/SKILL.md", "title": "Enumerate a source into a pinned record"},
+    {"role": "skill", "path": ".claude/skills/compare-capability/SKILL.md", "title": "Compare a capability against the existing model"},
+    {"role": "skill", "path": ".claude/skills/promote-finding/SKILL.md", "title": "Promote a validated finding"},
+    {"role": "evidence", "path": "findings/cross-provider/plugin-skill-standards-conformance.md", "title": "Plugin and Skill standards conformance"},
+    {"role": "evidence", "path": "probes/README.md", "title": "Validator and CLI probes behind findings"}
+  ],
+  "related": ["dev.bouch/bouch-agent-core", "dev.bouch/capability-routing-index"]
+}

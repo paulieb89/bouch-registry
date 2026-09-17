@@ -1,0 +1,21 @@
+{
+  "id": "dev.bouch/production-technique-reference",
+  "type": "agent-skill",
+  "title": "Production technique reference",
+  "summary": "Agent Skill routing into a researched electronic production technique corpus. Use when a sound design or mix task needs reasoning about why a technique works and what it trades off (synthesis choice, layering, saturation, sidechain alternatives, stereo and mono, reverb and delay, resampling), rather than REAPER mechanics.",
+  "domains": ["audio"],
+  "tags": ["sound-design", "synthesis", "electronic-music", "mixing", "production-technique", "knowledge"],
+  "lifecycle": "experimental",
+  "source": {
+    "repository": "audio-agent-workbench-v2",
+    "note": "Project Skill inside the audio workbench repository, which is not yet published."
+  },
+  "native": {
+    "spec": "agent-skills",
+    "manifest": ".claude/skills/production-technique-reference/SKILL.md"
+  },
+  "entrypoints": [
+    {"role": "knowledge", "path": "docs/research/electronic-production-technique/README.md", "title": "Technique corpus the Skill routes into"}
+  ],
+  "related": ["dev.bouch/audio-agent-workbench-v2"]
+}

@@ -1,0 +1,24 @@
+{
+  "id": "dev.bouch/reaper-agent-lab",
+  "type": "evidence-repository",
+  "title": "REAPER Agent Lab V1",
+  "summary": "Frozen first-generation audio lab: read-only evidence, never modified. Consult for proven music-production knowledge before re-deriving it: genre and playbook documents (bass and sub, drums and groove, builds and drops, pads, wobble and motion), the plugin palette, sample transformation methodology, and BS.1770 render analysis that V2's tooling was ported from.",
+  "domains": ["audio"],
+  "tags": ["reaper", "music-production", "electronic-music", "sound-design", "synthesis", "sampling", "playbooks", "render-verification", "frozen-evidence"],
+  "lifecycle": "frozen",
+  "source": {
+    "repository": "reaper-agent-lab",
+    "ref": "v1-evidence-freeze-2026-09-13",
+    "note": "Not yet published to a remote repository. Gitignored renders and audio are pinned by an evidence manifest, not tracked."
+  },
+  "entrypoints": [
+    {"role": "contract", "path": "CLAUDE.md", "title": "Prepared studio map"},
+    {"role": "knowledge", "path": "docs/music/README.md", "title": "Music knowledge index"},
+    {"role": "knowledge", "path": "docs/music/playbooks", "title": "Production playbooks: bass, drums, builds and drops, pads, wobble"},
+    {"role": "knowledge", "path": "docs/plugin-palette-v1.md", "title": "Instrument and plugin palette"},
+    {"role": "skill", "path": ".claude/skills/render-and-verify/SKILL.md", "title": "Render and verify"},
+    {"role": "skill", "path": ".claude/skills/sample-transform/SKILL.md", "title": "Sample transformation"},
+    {"role": "tool", "path": "analyze.py", "title": "Render analysis: loudness, peaks, stereo, bands, silence"}
+  ],
+  "related": ["dev.bouch/audio-agent-workbench-v2", "dev.bouch/reaper-mcp"]
+}

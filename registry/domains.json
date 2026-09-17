@@ -1,0 +1,12 @@
+[
+  {
+    "id": "agent-harness",
+    "title": "Agent harness methodology",
+    "summary": "How Bouch builds and verifies agent harnesses across domains: durable contracts, progressive knowledge (Skills), capability preference order, domain-native verification, governance, /prime vs recon, and observability of session history. Consult before designing a new harness, Skill, plugin, registry or evaluation approach — the standards research and cross-domain model already exist."
+  },
+  {
+    "id": "audio",
+    "title": "Audio and electronic music production",
+    "summary": "Agent-driven sound design, synthesis, arrangement, mixing and render verification, centred on REAPER controlled through an MCP server. Bouch already has a live workbench (V2), a frozen evidence lab (V1), a researched production-technique corpus, deterministic render analysis, and a cross-source capability map that records which areas are proven and which are still gaps. Human listening is the authority on timbre; analysis proves technical correctness only."
+  }
+]

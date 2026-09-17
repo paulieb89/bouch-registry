@@ -1,0 +1,18 @@
+{
+  "id": "dev.bouch/sessinspect",
+  "type": "observability-tool",
+  "title": "sessinspect",
+  "summary": "Read-only inspector for Claude Code session evidence. Use to answer a specific question about past agent sessions (what tools ran, what failed, which files were touched, how context was used) instead of loading raw transcripts into context. Every command supports --json; run `sessinspect --help` for the current command set.",
+  "domains": ["agent-harness"],
+  "tags": ["observability", "session-history", "claude-code", "transcripts", "cli"],
+  "lifecycle": "active",
+  "source": {
+    "repository": "cc-session-inspector",
+    "note": "Not yet published to a remote repository."
+  },
+  "entrypoints": [
+    {"role": "tool", "path": "sessinspect/cli.py", "title": "sessinspect CLI"},
+    {"role": "contract", "path": "pyproject.toml", "title": "Package and console script"}
+  ],
+  "related": ["dev.bouch/capability-routing-index"]
+}

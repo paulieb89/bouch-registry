@@ -1,0 +1,1 @@
+"""Bouch capability metaregistry."""

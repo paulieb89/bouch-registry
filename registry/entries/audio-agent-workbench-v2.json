@@ -1,0 +1,25 @@
+{
+  "id": "dev.bouch/audio-agent-workbench-v2",
+  "type": "reference-workbench",
+  "title": "Audio Agent Workbench V2",
+  "summary": "The current Bouch workbench for agent-driven electronic music production and sound design in REAPER. Start here for any audio creation task: it records the capability map and demonstrated gaps, Skills for assembling arrangements and loading Surge XT patches or DecentSampler instruments, a production-technique reasoning corpus, offline tools for render verification, and per-experiment evidence. Requires a running REAPER with the reaper-mcp Lua bridge.",
+  "domains": ["audio"],
+  "tags": ["reaper", "daw", "music-production", "electronic-music", "sound-design", "synthesis", "surge-xt", "decentsampler", "sampling", "mixing", "arrangement", "render-verification"],
+  "lifecycle": "experimental",
+  "source": {
+    "repository": "audio-agent-workbench-v2",
+    "note": "Not yet published to a remote repository."
+  },
+  "entrypoints": [
+    {"role": "contract", "path": "CLAUDE.md", "title": "Workbench contract: evidence rules and skill routing"},
+    {"role": "contract", "path": ".claude/commands/prime.md", "title": "Validated /prime for the audio workbench"},
+    {"role": "knowledge", "path": "docs/reconnaissance.md", "title": "Capability map, demonstrated gaps and next acceptance slice"},
+    {"role": "knowledge", "path": "docs/research/electronic-production-technique/README.md", "title": "Electronic production technique corpus: synthesis, layering, EQ, compression, sidechain, reverb"},
+    {"role": "skill", "path": ".claude/skills/audio-track-assembly/SKILL.md", "title": "Assemble, render and verify an arrangement"},
+    {"role": "skill", "path": ".claude/skills/reaper-surge-patches/SKILL.md", "title": "Load a designed Surge XT synth patch"},
+    {"role": "skill", "path": ".claude/skills/reaper-decentsampler-instruments/SKILL.md", "title": "Load a DecentSampler sampled instrument"},
+    {"role": "tool", "path": "tools/README.md", "title": "Offline tools: render analysis, drum pattern mixdown, sample extraction"},
+    {"role": "evidence", "path": "docs/experiments", "title": "Per-experiment evidence (sound palette, sidechain, sampling, patch loading)"}
+  ],
+  "related": ["dev.bouch/reaper-mcp", "dev.bouch/production-technique-reference", "dev.bouch/reaper-agent-lab", "dev.bouch/agent-enumeration-lab"]
+}

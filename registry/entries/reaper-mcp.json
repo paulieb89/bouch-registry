@@ -1,0 +1,26 @@
+{
+  "id": "dev.bouch/reaper-mcp",
+  "type": "mcp-server",
+  "title": "REAPER MCP server",
+  "summary": "Guarded MCP control of the REAPER DAW through a local Lua bridge: projects, tracks, MIDI, FX and patch state, rendering. The action surface used by the Bouch audio workbenches. Tools are exposed in selectable profiles; enumerate the live server rather than trusting a count. Local stdio server, not a remote service.",
+  "domains": ["audio"],
+  "tags": ["reaper", "daw", "mcp", "music-production", "fx", "midi", "rendering", "mixing", "mastering"],
+  "lifecycle": "active",
+  "source": {
+    "repository": "reaper-mcp",
+    "url": "https://github.com/danishaft/reaper-mcp",
+    "note": "Third-party upstream (published on PyPI as danishaft-reaper-mcp). Bouch extensions used by the audio workbench (e.g. CLAP patch state, DecentSampler loading, track channel count) are unpublished local commits on top of upstream."
+  },
+  "native": {
+    "spec": "mcp-server-json",
+    "manifest": null,
+    "note": "No server.json exists and the server is not listed in the MCP Registry."
+  },
+  "entrypoints": [
+    {"role": "contract", "path": "AGENTS.md", "title": "Agent instructions"},
+    {"role": "knowledge", "path": "docs/reaper-mcp-engineering-standards.md", "title": "Engineering standards"},
+    {"role": "skill", "path": ".agents/skills/reaper-mix-master-engineer/SKILL.md", "title": "Mix and master engineer Skill"},
+    {"role": "evidence", "path": "evals/README.md", "title": "Deterministic mastering-safety evals"}
+  ],
+  "related": ["dev.bouch/audio-agent-workbench-v2", "dev.bouch/reaper-agent-lab"]
+}
