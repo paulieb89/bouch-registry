@@ -2,9 +2,9 @@
   "id": "dev.bouch/agent-enumeration-lab",
   "type": "evidence-repository",
   "title": "Agent Enumeration Lab",
-  "summary": "Bouch's research and evidence layer for agent standards, harnesses, MCP, Skills, plugins and protocols. Consult before researching a standard or ecosystem from scratch: source records pin what was inspected and when, findings carry lifecycle status (ENUMERATED, VALIDATED, PROMOTED), and probes hold the real validator and CLI runs behind each claim.",
-  "domains": ["agent-harness"],
-  "tags": ["research", "standards", "agent-plugins", "agent-skills", "provenance", "enumeration", "probes"],
+  "summary": "Bouch's research and evidence layer for agent standards, harnesses, MCP, Skills, plugins, protocols and domain knowledge. Consult before researching a standard or ecosystem from scratch: source records pin what was inspected and when, findings carry lifecycle status (ENUMERATED, VALIDATED, PROMOTED), and probes hold the real validator and CLI runs behind each claim. Includes the standards fit behind this registry and an evidence-tiered audio capability map showing which production areas are proven and which are gaps.",
+  "domains": ["agent-harness", "audio"],
+  "tags": ["research", "standards", "agent-plugins", "agent-skills", "mcp-registry", "a2a", "provenance", "enumeration", "probes", "capability-map"],
   "lifecycle": "active",
   "source": {
     "repository": "agent-enumeration-lab",
@@ -16,8 +16,15 @@
     {"role": "skill", "path": ".claude/skills/enumerate-source/SKILL.md", "title": "Enumerate a source into a pinned record"},
     {"role": "skill", "path": ".claude/skills/compare-capability/SKILL.md", "title": "Compare a capability against the existing model"},
     {"role": "skill", "path": ".claude/skills/promote-finding/SKILL.md", "title": "Promote a validated finding"},
+    {"role": "evidence", "path": "findings/cross-provider/bouch-registry-standards-fit.md", "title": "Registry standards fit: native coverage of the eight Bouch types"},
     {"role": "evidence", "path": "findings/cross-provider/plugin-skill-standards-conformance.md", "title": "Plugin and Skill standards conformance"},
+    {"role": "knowledge", "path": "domains/audio/README.md", "title": "Audio domain enumeration index"},
+    {"role": "evidence", "path": "findings/domain/audio/audio-domain-capability-map.md", "title": "Audio capability map: proven sound design, mix and verification areas and gaps"},
+    {"role": "evidence", "path": "findings/domain/audio/audio-verification-practices.md", "title": "Audio verification practices across sources"},
+    {"role": "evidence", "path": "findings/domain/audio/portable-vs-reaper-boundary.md", "title": "Portable audio knowledge vs REAPER-specific mechanics"},
+    {"role": "evidence", "path": "findings/domain/audio/existing-audio-skill-boundaries.md", "title": "Boundaries of existing audio Skills"},
+    {"role": "evidence", "path": "findings/domain/audio/bouch-audio-v0.1-design.md", "title": "bouch-audio domain pack design synthesis"},
     {"role": "evidence", "path": "probes/README.md", "title": "Validator and CLI probes behind findings"}
   ],
-  "related": ["dev.bouch/bouch-agent-core", "dev.bouch/capability-routing-index"]
+  "related": ["dev.bouch/bouch-agent-core", "dev.bouch/capability-routing-index", "dev.bouch/audio-agent-workbench-v2", "dev.bouch/reaper-agent-lab"]
 }

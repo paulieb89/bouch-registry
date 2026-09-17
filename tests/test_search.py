@@ -16,8 +16,12 @@ def ids(hits):
 
 
 def test_realistic_audio_query_routes_to_the_audio_ecosystem(registry):
-    top3 = set(ids(registry.search(AUDIO_QUERY)[:3]))
-    assert top3 == AUDIO_CORE
+    hits = registry.search(AUDIO_QUERY)
+    top4 = hits[:4]
+    assert all("audio" in h.capability.domains for h in top4)
+    assert AUDIO_CORE <= set(ids(top4))
+    non_audio = [h.score for h in hits if "audio" not in h.capability.domains]
+    assert all(h.score > max(non_audio, default=0) for h in hits if h.capability.id in AUDIO_CORE)
 
 
 def test_audio_routing_reaches_the_mcp_server_via_the_workbench(registry):
