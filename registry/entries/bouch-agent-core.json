@@ -8,7 +8,7 @@
   "lifecycle": "active",
   "source": {
     "repository": "bouch-agent-core",
-    "note": "Not yet published to a remote repository."
+    "url": "https://github.com/paulieb89/bouch-agent-core"
   },
   "native": {
     "spec": "agent-plugins",

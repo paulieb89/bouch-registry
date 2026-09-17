@@ -7,8 +7,9 @@
   "tags": ["observability", "session-history", "claude-code", "transcripts", "cli"],
   "lifecycle": "active",
   "source": {
-    "repository": "cc-session-inspector",
-    "note": "Not yet published to a remote repository."
+    "repository": "sessinspect",
+    "url": "https://github.com/paulieb89/sessinspect",
+    "note": "Published as its own package repository. Promoted from the private cc-session-inspector research repository, which remains the historical record of the tool's development and is not published."
   },
   "entrypoints": [
     {"role": "tool", "path": "sessinspect/cli.py", "title": "sessinspect CLI"},

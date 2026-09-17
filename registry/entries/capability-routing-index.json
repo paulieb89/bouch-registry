@@ -8,7 +8,7 @@
   "lifecycle": "active",
   "source": {
     "repository": "cc-session-inspector",
-    "note": "Not yet published to a remote repository. The harness model and prime contract are frozen at the cited tag; the routing index was added after it."
+    "note": "Deliberately not published: the index's pointers enumerate private checkouts and unpublished projects. The harness model and prime contract are frozen at the cited tag; the routing index was added after it."
   },
   "entrypoints": [
     {"role": "knowledge", "path": "docs/research/capability-routing-index.md", "title": "Capability routing index"},
