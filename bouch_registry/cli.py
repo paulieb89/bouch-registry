@@ -47,7 +47,7 @@ def main(argv: list[str] | None = None) -> int:
     if command == "serve":
         from .server import serve
 
-        serve(host=getattr(args, "host", "127.0.0.1"), port=getattr(args, "port", None))
+        serve(registry, host=getattr(args, "host", "127.0.0.1"), port=getattr(args, "port", None))
         return 0
     if command == "validate":
         print(f"ok: {len(registry.capabilities)} capabilities in {len(registry.domains)} domains")

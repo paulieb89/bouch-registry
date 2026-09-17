@@ -17,7 +17,7 @@ from pydantic import BaseModel, Field
 from starlette.responses import JSONResponse
 
 from .model import Capability, CapabilityType
-from .store import Registry, capability_uri, domain_uri, load_registry
+from .store import Registry, capability_uri, domain_uri
 
 READ_ONLY = {"readOnlyHint": True, "idempotentHint": True, "openWorldHint": False}
 
@@ -186,7 +186,16 @@ def create_server(registry: Registry) -> FastMCP:
 
     @mcp.custom_route("/health", methods=["GET"])
     async def health(request):
-        return JSONResponse({"status": "ok", "server": "bouch-registry"})
+        # Counts are read off the loaded registry, so a deployment that served a
+        # truncated or stale dataset would show it here rather than report "ok".
+        return JSONResponse(
+            {
+                "status": "ok",
+                "server": "bouch-registry",
+                "capabilities": len(registry.capabilities),
+                "domains": len(registry.domains),
+            }
+        )
 
     return mcp
 
@@ -268,11 +277,11 @@ def create_http_app(registry: Registry):
     return _HttpGuard(_AcceptNormalizer(app))
 
 
-def serve(host: str = "127.0.0.1", port: int | None = None) -> None:
+def serve(registry: Registry, host: str = "127.0.0.1", port: int | None = None) -> None:
     import uvicorn
 
     uvicorn.run(
-        create_http_app(load_registry()),
+        create_http_app(registry),
         host=host,
         port=port or int(os.environ.get("PORT", "8080")),
         forwarded_allow_ips="*",

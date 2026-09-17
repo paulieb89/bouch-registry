@@ -1,0 +1,14 @@
+**/__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+.git/
+.gitignore
+.github/
+.pytest_cache/
+.venv/
+tests/
+scripts/
+registry.json

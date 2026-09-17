@@ -120,4 +120,10 @@ def test_http_guard_holds_get_open_and_rejects_delete(http_url):
         assert response.status_code == 200
         assert response.headers["content-type"].startswith("text/event-stream")
     assert httpx.delete(f"{http_url}/mcp").status_code == 405
-    assert httpx.get(f"{http_url}/health").json()["status"] == "ok"
+
+
+def test_health_reports_the_dataset_it_loaded(http_url, registry):
+    health = httpx.get(f"{http_url}/health").json()
+    assert health["status"] == "ok"
+    assert health["capabilities"] == len(registry.capabilities)
+    assert health["domains"] == len(registry.domains)
