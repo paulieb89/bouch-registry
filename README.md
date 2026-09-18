@@ -68,6 +68,8 @@ agent-enumeration-lab finding `bouch-registry-standards-fit`.
 3. Check the pointers against real checkouts (paths are passed on the command
    line, never stored):
    `uv run bouch-registry verify-sources --checkout <repository>=<path> ...`
+   and, for published sources, against the remote exactly as MCP clients
+   read them: `uv run bouch-registry verify-sources --remote`
 4. `uv run pytest`
 
 ## MCP surface
@@ -84,6 +86,34 @@ Resources:
 - `bouch://registry` — the whole registry (identical to `/registry.json`)
 - `bouch://domains/{domain}` — a domain with its full records
 - `bouch://capabilities/dev.bouch/{name}` — one record
+- `bouch://source/dev.bouch/{name}/{path*}` — one declared entrypoint (or
+  repo-relative native manifest) read from the record's canonical remote
+  source, e.g. `bouch://source/dev.bouch/audio/skills/electronic-production/SKILL.md`
+
+### Reading entrypoints remotely
+
+A consumer without the source checked out can read what a record declares,
+one document at a time, through `bouch://source/...`
+(`bouch_registry/remote.py`). The registry stores no content: each read
+follows the pointer at request time.
+
+- **Only declared paths.** Entrypoint paths and a repo-relative
+  `native.manifest`; anything else is refused before any network call. To make
+  a document reachable (for example a reference a Skill routes to), declare it
+  as an entrypoint.
+- **Pinned to the source.** `source.ref` is resolved to a commit from the
+  repository's own git ref advertisement (annotated tags are peeled); a record
+  without a ref resolves the remote `HEAD`. The file is then fetched by commit
+  id. Only `github.com` sources are supported.
+- **Checkable.** The content's `_meta` carries `repository`, `ref`, `commit`,
+  `path` and `git_blob`; `git_blob` equals `git rev-parse <commit>:<path>` in
+  any clone.
+- **No fallback.** An unpublished source (`source.url` null), a missing ref, a
+  path absent at that commit, a non-UTF-8 file or one over 512 KiB is a
+  resource error naming the cause. Nothing falls back to a local file, another
+  ref or a cached copy.
+
+Clients that cannot read MCP resources (tool-only clients) cannot use this yet.
 
 HTTP routes: `/mcp` (streamable HTTP, stateless, JSON responses, with the
 fleet's claude.ai GET/DELETE guard), `/registry.json`, `/health`.

@@ -35,7 +35,11 @@ async def test_resource_surface(mcp):
         resources = await client.list_resources()
         templates = await client.list_resource_templates()
     assert [str(r.uri) for r in resources] == ["bouch://registry"]
-    assert {t.uriTemplate for t in templates} == {"bouch://domains/{domain}", "bouch://capabilities/dev.bouch/{name}"}
+    assert {t.uriTemplate for t in templates} == {
+        "bouch://domains/{domain}",
+        "bouch://capabilities/dev.bouch/{name}",
+        "bouch://source/dev.bouch/{name}/{path*}",
+    }
 
 
 async def test_search_tool_returns_structured_hits(mcp):

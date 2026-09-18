@@ -1,8 +1,9 @@
 """Bouch Registry MCP server.
 
-Three read-only tools and three resource shapes over one loaded `Registry`.
+Three read-only tools and four resource shapes over one loaded `Registry`.
 The same object backs `/registry.json`, so the MCP and static views cannot
-diverge.
+diverge. The `bouch://source/...` template reads a record's declared
+entrypoints from its canonical remote source at read time (see `remote`).
 """
 
 from __future__ import annotations
@@ -11,12 +12,15 @@ import json
 import os
 from typing import Annotated
 
+import httpx
 from fastmcp import FastMCP
 from fastmcp.exceptions import ResourceError, ToolError
+from fastmcp.resources import ResourceContent, ResourceResult
 from pydantic import BaseModel, Field
 from starlette.responses import JSONResponse
 
 from .model import Capability, CapabilityType
+from .remote import SourceError, read_declared
 from .store import Registry, capability_uri, domain_uri
 
 READ_ONLY = {"readOnlyHint": True, "idempotentHint": True, "openWorldHint": False}
@@ -35,8 +39,15 @@ no live state: versions, tool lists, git state and runtime health must be \
 derived from the systems themselves.
 
 Typical flow: list_domains → search_capabilities (query and/or domain) → \
-get_capability for the records worth following. The registry does not \
-recommend or install anything; you decide what to use."""
+get_capability for the records worth following → read the entrypoints you \
+need. For a record with a published source, read a declared entrypoint (or \
+repo-relative native manifest) as the resource \
+bouch://source/<id>/<path>, e.g. bouch://source/dev.bouch/<name>/README.md. \
+It is fetched from the source repository at the record's source.ref (else the \
+remote HEAD); _meta carries the commit and git blob id served. Only declared \
+paths are readable, one at a time: read what the task needs, not the whole \
+package. The registry does not recommend or install anything; you decide \
+what to use."""
 
 
 class CapabilityHit(BaseModel):
@@ -70,7 +81,8 @@ class DomainList(BaseModel):
     domains: list[DomainSummary]
 
 
-def create_server(registry: Registry) -> FastMCP:
+def create_server(registry: Registry, transport: httpx.AsyncBaseTransport | None = None) -> FastMCP:
+    """`transport` replaces the network for remote source reads (tests only)."""
     mcp = FastMCP("bouch-registry", instructions=INSTRUCTIONS)
 
     def _require_domain(domain: str) -> None:
@@ -117,7 +129,11 @@ def create_server(registry: Registry) -> FastMCP:
     def get_capability(
         id: Annotated[str, Field(description="Registry id, e.g. 'dev.bouch/reaper-mcp'.")],
     ) -> Capability:
-        """Get one full capability record: source repository, native spec and manifest pointer, entrypoints, related ids."""
+        """Get one full capability record: source repository, native spec and manifest pointer, entrypoints, related ids.
+
+        Entrypoints of a record with a published source.url can be read as
+        resources: bouch://source/<id>/<entrypoint path>.
+        """
         cap = registry.get(id)
         if cap is None:
             raise ToolError(f"No capability with id {id!r}. Ids look like 'dev.bouch/<name>'; use search_capabilities to find one.")
@@ -179,6 +195,29 @@ def create_server(registry: Registry) -> FastMCP:
         if cap is None:
             raise ResourceError(f"Unknown capability dev.bouch/{name}")
         return _dumps(cap.model_dump(mode="json", exclude_none=True))
+
+    @mcp.resource(
+        "bouch://source/dev.bouch/{name}/{path*}",
+        name="Declared entrypoint",
+        description=(
+            "One declared entrypoint (or repo-relative native manifest) of a capability, read from its canonical "
+            "remote source at the record's source.ref, else the remote HEAD. Only declared paths resolve; missing "
+            "or stale pointers and unpublished sources are errors, never a fallback. _meta reports repository, "
+            "ref, commit and git blob id. Relative links inside a document resolve against its directory and are "
+            "readable when the target is itself declared."
+        ),
+        annotations={"readOnlyHint": True, "idempotentHint": True},
+    )
+    async def source_resource(name: str, path: str) -> ResourceResult:
+        cap = registry.get(f"dev.bouch/{name}")
+        if cap is None:
+            raise ResourceError(f"Unknown capability dev.bouch/{name}")
+        try:
+            async with httpx.AsyncClient(transport=transport) as client:
+                doc = await read_declared(cap, path, client)
+        except SourceError as exc:
+            raise ResourceError(str(exc)) from None
+        return ResourceResult([ResourceContent(doc.text, mime_type=doc.mime_type, meta=doc.provenance)])
 
     @mcp.custom_route("/registry.json", methods=["GET"])
     async def registry_json(request):

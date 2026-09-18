@@ -34,6 +34,10 @@ def main(argv: list[str] | None = None) -> int:
         "--checkout", action="append", default=[], metavar="REPOSITORY=PATH",
         help="map a source repository name to a local checkout; repeatable. Never stored in the registry.",
     )
+    p_verify.add_argument(
+        "--remote", action="store_true",
+        help="instead, read every declared pointer of published records from its remote source, as MCP clients do",
+    )
 
     args = parser.parse_args(argv)
     command = args.command or "serve"
@@ -59,6 +63,10 @@ def main(argv: list[str] | None = None) -> int:
         else:
             sys.stdout.write(text)
         return 0
+    if command == "verify-sources" and args.remote:
+        import asyncio
+
+        return asyncio.run(verify_remote(registry))
     if command == "verify-sources":
         checkouts = dict(item.split("=", 1) for item in args.checkout)
         return verify_sources(registry, {k: Path(v).expanduser() for k, v in checkouts.items()})
@@ -89,6 +97,30 @@ def verify_sources(registry: Registry, checkouts: dict[str, Path]) -> int:
             problem = _native_manifest_problem(repo, rev, cap.native.spec, cap.native.manifest)
             print(f"{'FAIL' if problem else 'ok  '} {cap.id}: native {cap.native.spec} manifest {problem or 'is well-formed'}")
             failures += bool(problem)
+    print(f"{failures} failure(s)")
+    return 1 if failures else 0
+
+
+async def verify_remote(registry: Registry) -> int:
+    """Resolve every declared path of every published record exactly as the bouch://source resource does."""
+    import httpx
+
+    from .remote import SourceError, declared_paths, read_declared
+
+    failures = 0
+    async with httpx.AsyncClient() as client:
+        for cap in registry.capabilities:
+            if cap.source.url is None:
+                print(f"SKIP {cap.id}: source not published remotely")
+                continue
+            for path in declared_paths(cap):
+                try:
+                    doc = await read_declared(cap, path, client)
+                except SourceError as exc:
+                    print(f"FAIL {cap.id}: {exc}")
+                    failures += 1
+                    continue
+                print(f"ok   {cap.id}: {doc.ref or 'HEAD'}@{doc.commit[:12]}:{path} blob {doc.blob[:12]}")
     print(f"{failures} failure(s)")
     return 1 if failures else 0
 
