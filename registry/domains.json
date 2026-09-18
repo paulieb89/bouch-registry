@@ -7,6 +7,6 @@
   {
     "id": "audio",
     "title": "Audio and electronic music production",
-    "summary": "Agent-driven sound design, synthesis, arrangement, mixing and render verification, centred on REAPER controlled through an MCP server. Bouch already has a live workbench (V2), a frozen evidence lab (V1), a researched production-technique corpus, deterministic render analysis, and a cross-source capability map that records which areas are proven and which are still gaps. Human listening is the authority on timbre; analysis proves technical correctness only."
+    "summary": "Agent-driven sound design, synthesis, arrangement, mixing and render verification. Bouch has a portable, DAW-independent domain package (bouch-audio: evidence-tiered Skills, references and verification tools) to consult first, a live REAPER workbench controlled through an MCP server (V2), a frozen evidence lab (V1), a researched production-technique corpus, deterministic render analysis, and a cross-source capability map that records which areas are proven and which are still gaps. Human listening is the authority on timbre; analysis proves technical correctness only."
   }
 ]

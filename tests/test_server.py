@@ -44,7 +44,7 @@ async def test_search_tool_returns_structured_hits(mcp):
             "search_capabilities", {"query": "electronic sound design synthesis", "domain": "audio"}
         )
     hits = result.structured_content["hits"]
-    assert hits[0]["id"] in {"dev.bouch/audio-agent-workbench-v2", "dev.bouch/production-technique-reference", "dev.bouch/reaper-agent-lab"}
+    assert hits[0]["id"] in {"dev.bouch/audio", "dev.bouch/audio-agent-workbench-v2", "dev.bouch/production-technique-reference", "dev.bouch/reaper-agent-lab"}
     assert hits[0]["resource_uri"].startswith("bouch://capabilities/dev.bouch/")
 
 

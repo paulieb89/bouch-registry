@@ -1,0 +1,29 @@
+{
+  "id": "dev.bouch/audio",
+  "type": "agent-plugin",
+  "title": "bouch-audio",
+  "summary": "Portable Bouch audio domain capability, DAW-independent. Consult for any audio creation, mixing or checking task before re-deriving audio technique or reaching into the REAPER workbenches: Skills for electronic production (sound design, bass, sub and kick, drum groove, arrangement, resampling), mixing and mastering boundaries, and audio verification (render measurement, verified offline sample edits, loudness-matched blind listening). Every claim is evidence-tiered and known gaps are listed rather than filled. Human listening decides musical quality.",
+  "domains": ["audio"],
+  "tags": ["music-production", "electronic-music", "sound-design", "synthesis", "mixing", "mastering", "loudness", "render-verification", "sampling", "sound-to-picture", "evidence-tiered", "skills", "claude-code"],
+  "lifecycle": "experimental",
+  "source": {
+    "repository": "bouch-audio",
+    "url": "https://github.com/paulieb89/bouch-audio",
+    "ref": "v0.1.0-experimental"
+  },
+  "native": {
+    "spec": "agent-plugins",
+    "manifest": "plugin.json"
+  },
+  "entrypoints": [
+    {"role": "contract", "path": "README.md", "title": "What the package is and is not"},
+    {"role": "skill", "path": "skills/electronic-production/SKILL.md", "title": "Electronic production: design, drums, bass, arrangement, resampling"},
+    {"role": "skill", "path": "skills/mixing-and-mastering/SKILL.md", "title": "Mixing and mastering: diagnose, balance, and what mastering can fix"},
+    {"role": "skill", "path": "skills/audio-verification/SKILL.md", "title": "Audio verification: measure renders, prove edits, hand listening to a human"},
+    {"role": "knowledge", "path": "references/evidence-status.md", "title": "Evidence tiers and known audio gaps"},
+    {"role": "tool", "path": "tools/README.md", "title": "analyze.py render measurement and sample_op.py verified sample edits"},
+    {"role": "evidence", "path": "evidence/PROVENANCE.md", "title": "Source pins, quote and licence audit, evidence-tier changes"},
+    {"role": "evidence", "path": "evidence/qualification.md", "title": "Package qualification and Linear Media consumer acceptance"}
+  ],
+  "related": ["dev.bouch/audio-agent-workbench-v2", "dev.bouch/reaper-agent-lab", "dev.bouch/production-technique-reference", "dev.bouch/reaper-mcp", "dev.bouch/agent-enumeration-lab", "dev.bouch/bouch-agent-core"]
+}

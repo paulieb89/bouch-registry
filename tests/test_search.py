@@ -5,6 +5,7 @@ AUDIO_QUERY = (
     "What existing Bouch capabilities should I inspect before building anything?"
 )
 AUDIO_CORE = {
+    "dev.bouch/audio",
     "dev.bouch/audio-agent-workbench-v2",
     "dev.bouch/production-technique-reference",
     "dev.bouch/reaper-agent-lab",
@@ -17,11 +18,17 @@ def ids(hits):
 
 def test_realistic_audio_query_routes_to_the_audio_ecosystem(registry):
     hits = registry.search(AUDIO_QUERY)
-    top4 = hits[:4]
-    assert all("audio" in h.capability.domains for h in top4)
-    assert AUDIO_CORE <= set(ids(top4))
+    top5 = hits[:5]
+    assert all("audio" in h.capability.domains for h in top5)
+    assert AUDIO_CORE <= set(ids(top5))
     non_audio = [h.score for h in hits if "audio" not in h.capability.domains]
     assert all(h.score > max(non_audio, default=0) for h in hits if h.capability.id in AUDIO_CORE)
+
+
+def test_daw_operation_queries_route_to_the_workbench_not_the_portable_pack(registry):
+    """bouch-audio is DAW-independent; REAPER plugin mechanics stay with the workbench."""
+    hits = registry.search("REAPER surge patch loading")
+    assert hits[0].capability.id == "dev.bouch/audio-agent-workbench-v2"
 
 
 def test_audio_routing_reaches_the_mcp_server_via_the_workbench(registry):
