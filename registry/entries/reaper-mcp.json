@@ -8,8 +8,9 @@
   "lifecycle": "active",
   "source": {
     "repository": "reaper-mcp",
-    "url": "https://github.com/danishaft/reaper-mcp",
-    "note": "Third-party upstream (published on PyPI as danishaft-reaper-mcp). Bouch extensions used by the audio workbench (e.g. CLAP patch state, DecentSampler loading, track channel count) are unpublished local commits on top of upstream."
+    "url": "https://github.com/paulieb89/reaper-mcp",
+    "ref": "bouch-audio-v2-2026-09-18",
+    "note": "Bouch fork of the third-party upstream https://github.com/danishaft/reaper-mcp (published on PyPI as danishaft-reaper-mcp), forked from upstream tag v0.1.0. The ref is the adapter state used by the Audio V2 workbench, carrying the Bouch extensions (CLAP patch state, guarded project lifecycle, DecentSampler loading, MIDI sysex, track channel count); its tag message records the provenance. V1 (reaper-agent-lab) evidence was produced against upstream v0.1.0."
   },
   "native": {
     "spec": "mcp-server-json",
