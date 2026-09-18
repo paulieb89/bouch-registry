@@ -13,7 +13,7 @@ from fastmcp.exceptions import ToolError
 
 from bouch_registry.server import create_http_app, create_server
 
-EXPECTED_TOOLS = {"search_capabilities", "get_capability", "list_domains"}
+EXPECTED_TOOLS = {"search_capabilities", "get_capability", "list_domains", "read_capability_entrypoint"}
 
 
 @pytest.fixture

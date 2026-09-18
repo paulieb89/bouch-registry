@@ -80,6 +80,10 @@ Tools (read-only, structured output):
   weighted keyword search with IDF; empty query browses.
 - `get_capability(id)` — the full record.
 - `list_domains()` — domains, routing summaries and member ids.
+- `read_capability_entrypoint(capability_id, entrypoint)` — one declared
+  entrypoint read from the canonical remote source; returns `content`,
+  `mime_type`, `repository`, `ref`, `commit`, `path` and `git_blob`. The tool
+  counterpart of `bouch://source/...` for tool-only clients (e.g. ChatGPT).
 
 Resources:
 
@@ -93,27 +97,31 @@ Resources:
 ### Reading entrypoints remotely
 
 A consumer without the source checked out can read what a record declares,
-one document at a time, through `bouch://source/...`
-(`bouch_registry/remote.py`). The registry stores no content: each read
-follows the pointer at request time.
+one document at a time: resource-capable clients through `bouch://source/...`,
+tool-only clients through `read_capability_entrypoint`. Both call the same
+resolver (`bouch_registry/remote.py`), so they share one allowlist, ref
+resolution, integrity report and failure behaviour. The registry stores no
+content: each read follows the pointer at request time.
 
 - **Only declared paths.** Entrypoint paths and a repo-relative
   `native.manifest`; anything else is refused before any network call. To make
   a document reachable (for example a reference a Skill routes to), declare it
-  as an entrypoint.
+  as an entrypoint. `verify-sources` enforces this for records with a
+  published source: every repo-relative file link in a declared Markdown
+  entrypoint must itself be declared (external URLs, anchors, code and
+  directory links are exempt).
 - **Pinned to the source.** `source.ref` is resolved to a commit from the
   repository's own git ref advertisement (annotated tags are peeled); a record
   without a ref resolves the remote `HEAD`. The file is then fetched by commit
   id. Only `github.com` sources are supported.
-- **Checkable.** The content's `_meta` carries `repository`, `ref`, `commit`,
-  `path` and `git_blob`; `git_blob` equals `git rev-parse <commit>:<path>` in
-  any clone.
+- **Checkable.** Provenance — `repository`, `ref`, `commit`, `path` and
+  `git_blob` — is in the resource content's `_meta` and in the tool's
+  structured output; `git_blob` equals `git rev-parse <commit>:<path>` in any
+  clone.
 - **No fallback.** An unpublished source (`source.url` null), a missing ref, a
   path absent at that commit, a non-UTF-8 file or one over 512 KiB is a
   resource error naming the cause. Nothing falls back to a local file, another
   ref or a cached copy.
-
-Clients that cannot read MCP resources (tool-only clients) cannot use this yet.
 
 HTTP routes: `/mcp` (streamable HTTP, stateless, JSON responses, with the
 fleet's claude.ai GET/DELETE guard), `/registry.json`, `/health`.

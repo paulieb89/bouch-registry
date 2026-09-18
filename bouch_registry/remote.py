@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import hashlib
 import mimetypes
+import posixpath
 import re
 from dataclasses import dataclass
 
@@ -67,6 +68,42 @@ def declared_paths(cap: Capability) -> list[str]:
     if cap.native and cap.native.manifest and not cap.native.manifest.startswith("https://"):
         paths.append(cap.native.manifest)
     return list(dict.fromkeys(paths))
+
+
+_FENCE = re.compile(r"^(```|~~~).*?^\1", re.M | re.S)
+_CODE_SPAN = re.compile(r"`[^`\n]*`")
+_INLINE_LINK = re.compile(r"\[[^\]]*\]\(\s*<?([^)\s>]+)>?(?:\s+[\"'(][^)]*)?\)")
+_REFERENCE_LINK = re.compile(r"^\s{0,3}\[[^\]]+\]:\s*<?(\S+?)>?(?:\s|$)", re.M)
+
+
+def undeclared_links(cap: Capability, path: str, text: str) -> list[str]:
+    """Repo-relative file links in a declared Markdown entrypoint whose targets are not declared.
+
+    A remote reader can only follow a link the record declares, so a declared
+    document that routes to an undeclared file is a dead end. External URLs,
+    anchors and directory links (trailing slash) are not file links.
+    """
+    if not path.endswith(".md"):
+        return []
+    prose = _CODE_SPAN.sub("", _FENCE.sub("", text))
+    targets = _INLINE_LINK.findall(prose) + _REFERENCE_LINK.findall(prose)
+    declared = set(declared_paths(cap))
+    problems = []
+    for target in dict.fromkeys(targets):
+        if re.match(r"^[a-z][a-z0-9+.-]*:", target, re.I) or target.startswith("#"):
+            continue
+        file_part = re.split(r"[#?]", target, maxsplit=1)[0]
+        if not file_part or file_part.endswith("/"):
+            continue
+        if file_part.startswith("/"):
+            resolved = posixpath.normpath(file_part.lstrip("/"))
+        else:
+            resolved = posixpath.normpath(posixpath.join(posixpath.dirname(path), file_part))
+        if resolved == ".." or resolved.startswith("../"):
+            problems.append(f"{path} links {target!r}, which is outside the repository")
+        elif resolved not in declared:
+            problems.append(f"{path} links {target!r} -> {resolved}, which is not a declared entrypoint")
+    return problems
 
 
 def git_blob_id(data: bytes) -> str:

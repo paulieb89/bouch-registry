@@ -78,6 +78,8 @@ def verify_sources(registry: Registry, checkouts: dict[str, Path]) -> int:
     """Check pointers against the versioned source: paths must exist in git at source.ref, else HEAD.
 
     Uncommitted files do not count — the registry points at versioned sources.
+    For records with a published source, links in declared Markdown must also
+    point at declared paths, since remote readers can follow nothing else.
     """
     failures = 0
     for cap in registry.capabilities:
@@ -93,6 +95,9 @@ def verify_sources(registry: Registry, checkouts: dict[str, Path]) -> int:
             ok = subprocess.run(["git", "-C", str(repo), "cat-file", "-e", f"{rev}:{path}"], capture_output=True).returncode == 0
             print(f"{'ok  ' if ok else 'FAIL'} {cap.id}: {rev}:{path}")
             failures += not ok
+            if ok and cap.source.url is not None and path.endswith(".md"):
+                text = subprocess.run(["git", "-C", str(repo), "show", f"{rev}:{path}"], capture_output=True, text=True).stdout
+                failures += _report_links(cap, path, text)
         if cap.native and cap.native.manifest and not cap.native.manifest.startswith("https://"):
             problem = _native_manifest_problem(repo, rev, cap.native.spec, cap.native.manifest)
             print(f"{'FAIL' if problem else 'ok  '} {cap.id}: native {cap.native.spec} manifest {problem or 'is well-formed'}")
@@ -121,8 +126,19 @@ async def verify_remote(registry: Registry) -> int:
                     failures += 1
                     continue
                 print(f"ok   {cap.id}: {doc.ref or 'HEAD'}@{doc.commit[:12]}:{path} blob {doc.blob[:12]}")
+                failures += _report_links(cap, path, doc.text)
     print(f"{failures} failure(s)")
     return 1 if failures else 0
+
+
+def _report_links(cap, path: str, text: str) -> int:
+    """Remote-readable records: every repo-relative file link in a declared Markdown entrypoint must be declared."""
+    from .remote import undeclared_links
+
+    problems = undeclared_links(cap, path, text)
+    for problem in problems:
+        print(f"FAIL {cap.id}: {problem}")
+    return len(problems)
 
 
 def _native_manifest_problem(repo: Path, rev: str, spec: str, path: str) -> str | None:

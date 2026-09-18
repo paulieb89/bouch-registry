@@ -5,6 +5,7 @@ import json
 import httpx
 import pytest
 from fastmcp import Client
+from fastmcp.exceptions import ToolError
 from mcp.shared.exceptions import McpError
 
 from bouch_registry.remote import _parse_advertisement, declared_paths, git_blob_id
@@ -135,3 +136,73 @@ async def test_registry_json_is_unchanged_by_remote_reading(mcp, registry):
     async with Client(mcp) as client:
         full = json.loads((await client.read_resource("bouch://registry"))[0].text)
     assert full == registry.to_json()
+
+
+# --- the same resolver as a tool, for tool-only clients ----------------------
+
+
+async def test_tool_and_resource_return_the_same_document(mcp):
+    async with Client(mcp) as client:
+        [resource] = await client.read_resource("bouch://source/dev.bouch/audio/skills/electronic-production/SKILL.md")
+        tool = await client.call_tool(
+            "read_capability_entrypoint",
+            {"capability_id": "dev.bouch/audio", "entrypoint": "skills/electronic-production/SKILL.md"},
+        )
+    out = tool.structured_content
+    assert out["content"] == resource.text
+    assert out["mime_type"] == resource.mimeType
+    assert {k: out[k] for k in resource.meta} == resource.meta
+    assert out["commit"] == TAG_COMMIT and out["git_blob"] == git_blob_id(SKILL)
+
+
+@pytest.mark.parametrize(
+    "capability_id, entrypoint, message",
+    [
+        ("dev.bouch/audio", "tools/analyze.py", "not a declared entrypoint"),
+        ("dev.bouch/audio", "README.md", "is missing from .* at v0.1.0-experimental"),
+        ("dev.bouch/audio-agent-workbench-v2", "CLAUDE.md", "no published remote source"),
+        ("dev.bouch/nope", "README.md", "Unknown capability"),
+    ],
+)
+async def test_tool_fails_clearly_like_the_resource(mcp, capability_id, entrypoint, message):
+    async with Client(mcp) as client:
+        with pytest.raises(ToolError, match=message):
+            await client.call_tool("read_capability_entrypoint", {"capability_id": capability_id, "entrypoint": entrypoint})
+
+
+async def test_tool_is_read_only_and_structured(mcp):
+    async with Client(mcp) as client:
+        [tool] = [t for t in await client.list_tools() if t.name == "read_capability_entrypoint"]
+    assert tool.annotations.readOnlyHint is True and tool.annotations.openWorldHint is True
+    assert set(tool.outputSchema["properties"]) >= {"content", "repository", "ref", "commit", "path", "git_blob"}
+
+
+# --- declared Markdown must not route to undeclared files --------------------
+
+
+def test_links_to_undeclared_files_are_reported(registry):
+    from bouch_registry.remote import undeclared_links
+
+    cap = registry.get("dev.bouch/audio")
+    text = """
+See [evidence](../../references/evidence-status.md#tiers) and [bass](../../references/bass-sub-kick-interaction.md).
+Undeclared: [analyzer](../../tools/analyze.py), ![plot](/docs/plot.png "a plot") and [ref-style][r].
+Escapes: [up](../../../other-repo/README.md)
+
+[r]: ../../evals/README.md
+
+Not file links: [web](https://example.com/x.md), [anchor](#top), [dir](../../tools/),
+`[in code](../../hidden.md)`
+
+```
+[in a fence](../../fenced.md)
+```
+"""
+    problems = undeclared_links(cap, "skills/electronic-production/SKILL.md", text)
+    assert problems == [
+        "skills/electronic-production/SKILL.md links '../../tools/analyze.py' -> tools/analyze.py, which is not a declared entrypoint",
+        "skills/electronic-production/SKILL.md links '/docs/plot.png' -> docs/plot.png, which is not a declared entrypoint",
+        "skills/electronic-production/SKILL.md links '../../../other-repo/README.md', which is outside the repository",
+        "skills/electronic-production/SKILL.md links '../../evals/README.md' -> evals/README.md, which is not a declared entrypoint",
+    ]
+    assert undeclared_links(cap, "plugin.json", "[x](nope.md)") == []

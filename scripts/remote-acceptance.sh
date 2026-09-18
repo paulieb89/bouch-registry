@@ -67,6 +67,17 @@ post '{"jsonrpc":"2.0","id":8,"method":"resources/read","params":{"uri":"bouch:/
 post '{"jsonrpc":"2.0","id":9,"method":"resources/read","params":{"uri":"bouch://source/dev.bouch/audio-agent-workbench-v2/CLAUDE.md"}}' \
   | py "assert 'no published remote source' in d['error']['message']; print('unpublished source ->', d['error']['message'][:60])"
 
+# The same resolver as a tool, for tool-only clients: identical bytes and provenance, same refusals.
+post '{"jsonrpc":"2.0","id":10,"method":"tools/call","params":{"name":"read_capability_entrypoint","arguments":{"capability_id":"dev.bouch/audio","entrypoint":"skills/electronic-production/SKILL.md"}}}' \
+  | py "
+import hashlib
+s = d['result']['structuredContent']; raw = s['content'].encode()
+assert s['ref'] == 'v0.1.0-experimental' and s['git_blob'] == hashlib.sha1(b'blob %d\\0' % len(raw) + raw).hexdigest()
+print('tool read:', s['path'], '@', s['ref'], s['commit'][:12], 'blob', s['git_blob'][:12])
+"
+post '{"jsonrpc":"2.0","id":11,"method":"tools/call","params":{"name":"read_capability_entrypoint","arguments":{"capability_id":"dev.bouch/audio","entrypoint":"tools/analyze.py"}}}' \
+  | py "assert d['result']['isError'] and 'not a declared entrypoint' in d['result']['content'][0]['text']; print('tool undeclared path -> error')"
+
 # Transport guards claude.ai depends on.
 code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 5 "$BASE/mcp" || true)
 [ "$code" = "200" ] || { echo "GET /mcp returned $code, expected 200 SSE"; exit 1; }

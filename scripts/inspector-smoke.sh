@@ -7,7 +7,7 @@ URL="${1:-http://127.0.0.1:8080/mcp}"
 I=(npx -y @modelcontextprotocol/inspector@latest --cli "$URL" --transport http)
 py() { python3 -c "import json,sys; d=json.load(sys.stdin); $1"; }
 
-"${I[@]}" --method tools/list | py "names=sorted(t['name'] for t in d['tools']); print('tools:', names); assert names==['get_capability','list_domains','search_capabilities']"
+"${I[@]}" --method tools/list | py "names=sorted(t['name'] for t in d['tools']); print('tools:', names); assert names==['get_capability','list_domains','read_capability_entrypoint','search_capabilities']"
 "${I[@]}" --method resources/list | py "u=[r['uri'] for r in d['resources']]; print('resources:', u); assert 'bouch://registry' in u"
 "${I[@]}" --method resources/templates/list | py "print('templates:', [t['uriTemplate'] for t in d['resourceTemplates']])"
 "${I[@]}" --method tools/call --tool-name search_capabilities \
@@ -17,4 +17,7 @@ py() { python3 -c "import json,sys; d=json.load(sys.stdin); $1"; }
   | py "n=d['structuredContent']['native']; print('native:', n); assert n['manifest']=='plugin.json'"
 "${I[@]}" --method resources/read --uri 'bouch://source/dev.bouch/audio/skills/electronic-production/SKILL.md' \
   | py "c=d['contents'][0]; m=c['_meta']; print('source read:', m['ref'], m['commit'][:12], m['git_blob'][:12]); assert c['text'].startswith('---') and m['ref']=='v0.1.0-experimental'"
+"${I[@]}" --method tools/call --tool-name read_capability_entrypoint \
+  --tool-arg 'capability_id=dev.bouch/audio' --tool-arg 'entrypoint=skills/electronic-production/SKILL.md' \
+  | py "s=d['structuredContent']; print('tool read:', s['ref'], s['commit'][:12], s['git_blob'][:12]); assert s['content'].startswith('---') and s['git_blob'].startswith('90596f08')"
 echo "smoke ok: $URL"
