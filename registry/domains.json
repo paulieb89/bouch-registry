@@ -8,5 +8,10 @@
     "id": "audio",
     "title": "Audio and electronic music production",
     "summary": "Agent-driven sound design, synthesis, arrangement, mixing and render verification. Bouch has a portable, DAW-independent domain package (bouch-audio: evidence-tiered Skills, references and verification tools) to consult first, a live REAPER workbench controlled through an MCP server (V2), a frozen evidence lab (V1), a researched production-technique corpus, deterministic render analysis, and a cross-source capability map that records which areas are proven and which are still gaps. Human listening is the authority on timbre; analysis proves technical correctness only."
+  },
+  {
+    "id": "web",
+    "title": "Web development",
+    "summary": "Agent-built web pages verified in a real browser. Bouch has a frozen, qualified reference workbench: a calibrated Playwright capture instrument (screenshots at phone and desktop widths, console and request errors, axe accessibility, layout overflow, silent font fallback) with a project contract that makes the rendered page, not the code, the authority, plus a container reproduction procedure. Consult before building web browser-verification tooling from scratch. A human decides final design quality."
   }
 ]

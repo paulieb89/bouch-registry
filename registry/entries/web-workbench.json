@@ -1,0 +1,27 @@
+{
+  "id": "dev.bouch/web-workbench",
+  "type": "reference-workbench",
+  "title": "Bouch Web Workbench V0.1",
+  "summary": "Frozen, qualified reference workbench for agent-driven web development with browser verification. Consult before building or checking a web page, or before inventing a way for an agent to see its rendered output: a calibrated capture instrument (Playwright and axe in Chromium at 375 and 1280 wide) that gates on console and request errors, serious accessibility violations, horizontal overflow and silent font fallback; a contract that requires reading the screenshots and keeps runtime evidence, deterministic checks, agent critique and human judgement separate; calibration against planted defects; and a pinned-container reproduction procedure. Requires Node 24 and a Chromium, or git and Docker to reproduce.",
+  "domains": ["web"],
+  "tags": ["web-development", "web-workbench", "browser-verification", "playwright", "chromium", "axe", "accessibility", "screenshots", "visual-verification", "layout", "fonts", "calibration", "reproduction", "docker", "frozen-evidence"],
+  "lifecycle": "frozen",
+  "source": {
+    "repository": "bouch-web-workbench",
+    "url": "https://github.com/paulieb89/bouch-web-workbench",
+    "ref": "v0.1.0",
+    "note": "The qualified V0.1 release. The repository's main branch continues development and is not this record."
+  },
+  "entrypoints": [
+    {"role": "contract", "path": "CLAUDE.md", "title": "Workbench contract: the rendered page is the authority; evidence and judgement kept separate"},
+    {"role": "contract", "path": "README.md", "title": "Commands, capture evidence files, gates, calibration and machine bindings"},
+    {"role": "contract", "path": "task/brief.md", "title": "The fixed task brief the workbench was accepted against"},
+    {"role": "contract", "path": "task/acceptance.md", "title": "Acceptance criteria for the task"},
+    {"role": "knowledge", "path": "docs/reconnaissance.md", "title": "Reconnaissance: what the machine already provided and why the workbench is this small"},
+    {"role": "evidence", "path": "docs/qualification.md", "title": "Capture instrument qualification: calibration results and mutations it must catch"},
+    {"role": "evidence", "path": "docs/cross-environment.md", "title": "Cross-environment qualification in the pinned Playwright container, and readiness for release"},
+    {"role": "evidence", "path": "docs/acceptance-report.md", "title": "Website acceptance report for the task"},
+    {"role": "tool", "path": "scripts/reproduce.sh", "title": "Reproduce calibration, acceptance tests and site capture from committed source in the pinned container"}
+  ],
+  "related": []
+}
