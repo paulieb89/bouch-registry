@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "bouch-registry"
-version = "0.3.0"
+version = "0.4.0"
 description = "Bouch capability metaregistry exposed as an MCP server and a static registry.json"
 readme = "README.md"
 license = "MIT"
