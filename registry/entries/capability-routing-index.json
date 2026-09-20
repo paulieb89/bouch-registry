@@ -2,13 +2,13 @@
   "id": "dev.bouch/capability-routing-index",
   "type": "routing-pointer",
   "title": "Capability routing index and cross-domain harness model",
-  "summary": "Pointer document routing to where each Bouch domain's harness facts live (Battlebuild/asset work, REAPER/audio, UK legal, UK due diligence, linear media), alongside the frozen cross-domain harness model and /prime contract it cites. Its pointers are checkout paths on the authoring machine, so treat them as hints to resolve, not portable identities.",
+  "summary": "Superseded historical record. The routing index was the hand-maintained predecessor of this registry: a pointer document routing to where each Bouch domain's harness facts live (Battlebuild/asset work, REAPER/audio, UK legal, UK due diligence, linear media). Do not route from it — it drifted, and the document itself is now marked HISTORICAL / SUPERSEDED. Kept because it still carries the frozen cross-domain harness model and /prime contract V1, whose portable successors are bouch-agent-core's own references.",
   "domains": ["agent-harness", "audio"],
-  "tags": ["routing", "index", "cross-domain", "prime", "harness-model"],
-  "lifecycle": "active",
+  "tags": ["routing", "index", "cross-domain", "prime", "harness-model", "superseded", "historical"],
+  "lifecycle": "deprecated",
   "source": {
     "repository": "cc-session-inspector",
-    "note": "Deliberately not published: the index's pointers enumerate private checkouts and unpublished projects. The harness model and prime contract are frozen at the cited tag; the routing index was added after it."
+    "note": "Deliberately not published: the index's pointers enumerate private checkouts and unpublished projects. The harness model and prime contract are frozen at the cited tag; the routing index was added after it, and was marked superseded by this registry on 2026-09-17 after three of its statements were found stale (a missing sessinspect command, linear-media state, and the Godot MCP addon described as in-repo when it is vendored upstream)."
   },
   "entrypoints": [
     {"role": "knowledge", "path": "docs/research/capability-routing-index.md", "title": "Capability routing index"},
