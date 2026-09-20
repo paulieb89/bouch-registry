@@ -1,6 +1,7 @@
 """Reading declared entrypoints from the canonical remote source, against a fake GitHub (offline)."""
 
 import json
+import re
 
 import httpx
 import pytest
@@ -10,11 +11,17 @@ from mcp.shared.exceptions import McpError
 
 from bouch_registry.remote import _parse_advertisement, declared_paths, git_blob_id
 from bouch_registry.server import create_server
+from bouch_registry.store import load_registry
 
 TAG_OBJECT = "1" * 40
 TAG_COMMIT = "2" * 40
 HEAD_COMMIT = "3" * 40
 SKILL = b"---\nname: electronic-production\n---\n# Electronic production\n"
+
+# Derived, never hardcoded: these tests fake a remote that must advertise
+# whatever tag dev.bouch/audio is currently pinned at. Writing the tag name
+# in here couples the suite to one release and breaks it on every bump.
+AUDIO_REF = load_registry().get("dev.bouch/audio").source.ref
 
 
 def pkt(line: str) -> bytes:
@@ -57,7 +64,7 @@ def github():
             (HEAD_COMMIT, "skills/electronic-production/SKILL.md"): b"moved on after the tag\n",
             (HEAD_COMMIT, "README.md"): b"# bouch-agent-core\n",
         },
-        tags={"v0.1.0-experimental": TAG_OBJECT, "v0.1.0-experimental^{}": TAG_COMMIT},
+        tags={AUDIO_REF: TAG_OBJECT, f"{AUDIO_REF}^{{}}": TAG_COMMIT},
     )
 
 
@@ -87,7 +94,7 @@ async def test_reads_declared_entrypoint_at_the_pinned_tag_commit(mcp, github):
     assert content.meta == {
         "capability": "dev.bouch/audio",
         "repository": "https://github.com/paulieb89/bouch-audio",
-        "ref": "v0.1.0-experimental",
+        "ref": AUDIO_REF,
         "commit": TAG_COMMIT,  # peeled annotated tag, not the tag object and not HEAD
         "path": "skills/electronic-production/SKILL.md",
         "git_blob": git_blob_id(SKILL),
@@ -112,14 +119,14 @@ async def test_undeclared_path_is_refused_without_touching_the_network(mcp, gith
 async def test_missing_entrypoint_at_the_ref_is_a_clear_error(mcp):
     # Declared and present at HEAD in reality, but absent at the pinned commit here: stale, no fallback.
     async with Client(mcp) as client:
-        with pytest.raises(McpError, match=r"README.md' is missing from .* at v0.1.0-experimental"):
+        with pytest.raises(McpError, match=rf"README.md' is missing from .* at {re.escape(AUDIO_REF)}"):
             await client.read_resource("bouch://source/dev.bouch/audio/README.md")
 
 
 async def test_missing_ref_is_a_clear_error(registry, github):
     github.tags = {}
     async with Client(create_server(registry, transport=httpx.MockTransport(github))) as client:
-        with pytest.raises(McpError, match="ref 'v0.1.0-experimental' does not exist"):
+        with pytest.raises(McpError, match=rf"ref '{re.escape(AUDIO_REF)}' does not exist"):
             await client.read_resource("bouch://source/dev.bouch/audio/skills/electronic-production/SKILL.md")
 
 
@@ -159,7 +166,7 @@ async def test_tool_and_resource_return_the_same_document(mcp):
     "capability_id, entrypoint, message",
     [
         ("dev.bouch/audio", "tools/analyze.py", "not a declared entrypoint"),
-        ("dev.bouch/audio", "README.md", "is missing from .* at v0.1.0-experimental"),
+        ("dev.bouch/audio", "README.md", rf"is missing from .* at {re.escape(AUDIO_REF)}"),
         ("dev.bouch/audio-agent-workbench-v2", "CLAUDE.md", "no published remote source"),
         ("dev.bouch/nope", "README.md", "Unknown capability"),
     ],

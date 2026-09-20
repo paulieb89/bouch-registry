@@ -9,7 +9,7 @@
   "source": {
     "repository": "bouch-audio",
     "url": "https://github.com/paulieb89/bouch-audio",
-    "ref": "v0.1.0-experimental"
+    "ref": "v0.2.0"
   },
   "native": {
     "spec": "agent-plugins",
