@@ -7,13 +7,21 @@
 set -euo pipefail
 BASE="${1:-https://registry.bouch.dev}"
 BASE="${BASE%/}"
-py() { python3 -c "import json,sys; d=json.load(sys.stdin); $1"; }
+py() { python3 -c "import json,sys,os,hashlib; d=json.load(sys.stdin); $1"; }
 post() {
   curl -s -X POST "$BASE/mcp" -H 'content-type: application/json' \
     -H 'accept: application/json, text/event-stream' -d "$1"
 }
 
 curl -sf "$BASE/health" | py "assert d['status']=='ok' and d['capabilities']>0; print('health:', d)"
+
+# Derived, never hardcoded: dev.bouch/audio's pinned ref advances on every
+# release bump (see registry commit 200fb2b) — read it from the deployment
+# under test instead of baking in whatever tag was current when this script
+# was written.
+export AUDIO_REF=$(post '{"jsonrpc":"2.0","id":0,"method":"tools/call","params":{"name":"get_capability","arguments":{"id":"dev.bouch/audio"}}}' \
+  | py "print(d['result']['structuredContent']['source']['ref'])")
+echo "audio ref: $AUDIO_REF"
 
 curl -sf "$BASE/registry.json" > /tmp/bouch-registry-static.$$.json
 python3 -c "
@@ -56,9 +64,8 @@ post '{"jsonrpc":"2.0","id":6,"method":"tools/call","params":{"name":"install_ca
 # an undeclared path and an unpublished source fail with a named cause.
 post '{"jsonrpc":"2.0","id":7,"method":"resources/read","params":{"uri":"bouch://source/dev.bouch/audio/skills/electronic-production/SKILL.md"}}' \
   | py "
-import hashlib
 c = d['result']['contents'][0]; m = c['_meta']; raw = c['text'].encode()
-assert m['ref'] == 'v0.1.0-experimental' and len(m['commit']) == 40
+assert m['ref'] == os.environ['AUDIO_REF'] and len(m['commit']) == 40
 assert m['git_blob'] == hashlib.sha1(b'blob %d\\0' % len(raw) + raw).hexdigest(), 'served bytes do not match git_blob'
 print('source read:', m['path'], '@', m['ref'], m['commit'][:12], 'blob', m['git_blob'][:12])
 "
@@ -70,9 +77,8 @@ post '{"jsonrpc":"2.0","id":9,"method":"resources/read","params":{"uri":"bouch:/
 # The same resolver as a tool, for tool-only clients: identical bytes and provenance, same refusals.
 post '{"jsonrpc":"2.0","id":10,"method":"tools/call","params":{"name":"read_capability_entrypoint","arguments":{"capability_id":"dev.bouch/audio","entrypoint":"skills/electronic-production/SKILL.md"}}}' \
   | py "
-import hashlib
 s = d['result']['structuredContent']; raw = s['content'].encode()
-assert s['ref'] == 'v0.1.0-experimental' and s['git_blob'] == hashlib.sha1(b'blob %d\\0' % len(raw) + raw).hexdigest()
+assert s['ref'] == os.environ['AUDIO_REF'] and s['git_blob'] == hashlib.sha1(b'blob %d\\0' % len(raw) + raw).hexdigest()
 print('tool read:', s['path'], '@', s['ref'], s['commit'][:12], 'blob', s['git_blob'][:12])
 "
 post '{"jsonrpc":"2.0","id":11,"method":"tools/call","params":{"name":"read_capability_entrypoint","arguments":{"capability_id":"dev.bouch/audio","entrypoint":"tools/analyze.py"}}}' \
