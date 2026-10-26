@@ -9,7 +9,7 @@
   "source": {
     "repository": "bouch-plugins",
     "url": "https://github.com/paulieb89/bouch-plugins",
-    "ref": "bouch-game-assets-v0.1.0",
+    "ref": "bouch-game-assets-v0.1.1",
     "note": "Initial package release is pinned in the plugin marketplace repository; the tag must be published before remote Registry reads can succeed."
   },
   "native": {
