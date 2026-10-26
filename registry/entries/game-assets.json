@@ -1,0 +1,27 @@
+{
+  "id": "dev.bouch/game-assets",
+  "type": "agent-plugin",
+  "title": "bouch-game-assets",
+  "summary": "Evidence-led game and 3D asset production. Consult whenever an agent builds, imports, repairs, verifies, playtests or visually reviews a game-ready asset or scene. Separates source, import, deterministic runtime, real interaction and perceptual evidence; preserves immutable candidates and bounded repair lineage; closes out only on persisted evidence. Projects still own their engine/DCC adapters and runtime harnesses.",
+  "domains": ["game-assets"],
+  "tags": ["game-assets", "3d", "blender", "godot", "asset-verification", "candidate-lineage", "evidence", "human-review"],
+  "lifecycle": "experimental",
+  "source": {
+    "repository": "bouch-plugins",
+    "url": "https://github.com/paulieb89/bouch-plugins",
+    "note": "Initial package is being prepared in the plugin marketplace repository; pin a release ref before promoting this record to active."
+  },
+  "native": {
+    "spec": "agent-plugins",
+    "manifest": "plugins/bouch-game-assets/plugin.json"
+  },
+  "entrypoints": [
+    {"role": "contract", "path": "plugins/bouch-game-assets/README.md", "title": "Package boundary and installation"},
+    {"role": "skill", "path": "plugins/bouch-game-assets/skills/game-asset-evidence-loop/SKILL.md", "title": "Game asset evidence loop"},
+    {"role": "knowledge", "path": "plugins/bouch-game-assets/references/evidence-model.md", "title": "Portable evidence model"},
+    {"role": "knowledge", "path": "plugins/bouch-game-assets/references/project-adapter-contract.md", "title": "Project adapter contract"},
+    {"role": "tool", "path": "plugins/bouch-game-assets/tools/validate_closeout_gate.py", "title": "Project-independent close-out validator"},
+    {"role": "evidence", "path": "plugins/bouch-game-assets/evals/evals.json", "title": "Skill evaluation prompts"}
+  ],
+  "related": ["dev.bouch/bouch-agent-core", "dev.bouch/web-workbench"]
+}
