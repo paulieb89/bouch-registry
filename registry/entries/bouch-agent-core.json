@@ -8,7 +8,8 @@
   "lifecycle": "active",
   "source": {
     "repository": "bouch-agent-core",
-    "url": "https://github.com/paulieb89/bouch-agent-core"
+    "url": "https://github.com/paulieb89/bouch-agent-core",
+    "ref": "v0.2.4"
   },
   "native": {
     "spec": "agent-plugins",
@@ -20,6 +21,7 @@
     {"role": "skill", "path": "skills/environment-recon/SKILL.md", "title": "Bounded environment recon"},
     {"role": "skill", "path": "skills/prime-authoring/SKILL.md", "title": "Authoring a project /prime"},
     {"role": "skill", "path": "skills/evidence-freeze/SKILL.md", "title": "Freezing verified evidence"},
+    {"role": "skill", "path": "skills/bouch-project-routing/SKILL.md", "title": "Bouch project routing"},
     {"role": "knowledge", "path": "references/cross-domain-harness-model.md", "title": "Cross-domain harness model"},
     {"role": "knowledge", "path": "references/derive-vs-persist.md", "title": "Derive vs persist"}
   ],
