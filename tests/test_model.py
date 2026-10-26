@@ -50,7 +50,7 @@ def _expect_problem(root, fragment):
         (lambda e: e.update(domains=["no-such-domain"]), "unknown domain"),
         (lambda e: e.update(related=["dev.bouch/does-not-exist"]), "does not exist"),
         (lambda e: e.update(id="com.example/bouch-agent-core"), "id"),
-        (lambda e: e.update(lifecycle="frozen"), "source.ref"),
+        (lambda e: (e.update(lifecycle="frozen"), e["source"].pop("ref")), "source.ref"),
     ],
 )
 def test_invalid_native_entry_is_rejected(data_copy, mutate, fragment):

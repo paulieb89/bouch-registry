@@ -63,6 +63,7 @@ def github():
             (TAG_COMMIT, "skills/electronic-production/SKILL.md"): SKILL,
             (HEAD_COMMIT, "skills/electronic-production/SKILL.md"): b"moved on after the tag\n",
             (HEAD_COMMIT, "README.md"): b"# bouch-agent-core\n",
+            (HEAD_COMMIT, "pyproject.toml"): b"[project]\nname = 'sessinspect'\n",
         },
         tags={AUDIO_REF: TAG_OBJECT, f"{AUDIO_REF}^{{}}": TAG_COMMIT},
     )
@@ -104,7 +105,7 @@ async def test_reads_declared_entrypoint_at_the_pinned_tag_commit(mcp, github):
 
 async def test_unpinned_record_resolves_remote_head(mcp):
     async with Client(mcp) as client:
-        [content] = await client.read_resource("bouch://source/dev.bouch/bouch-agent-core/README.md")
+        [content] = await client.read_resource("bouch://source/dev.bouch/sessinspect/pyproject.toml")
     assert content.meta["ref"] is None
     assert content.meta["commit"] == HEAD_COMMIT
 
