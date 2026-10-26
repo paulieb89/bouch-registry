@@ -20,6 +20,8 @@
     {"role": "skill", "path": "plugins/bouch-game-assets/skills/game-asset-evidence-loop/SKILL.md", "title": "Game asset evidence loop"},
     {"role": "knowledge", "path": "plugins/bouch-game-assets/references/evidence-model.md", "title": "Portable evidence model"},
     {"role": "knowledge", "path": "plugins/bouch-game-assets/references/project-adapter-contract.md", "title": "Project adapter contract"},
+    {"role": "knowledge", "path": "plugins/bouch-game-assets/assets/asset-loop-record.template.yaml", "title": "Candidate record template"},
+    {"role": "knowledge", "path": "plugins/bouch-game-assets/assets/closeout-gate.template.json", "title": "Close-out gate template"},
     {"role": "tool", "path": "plugins/bouch-game-assets/tools/validate_closeout_gate.py", "title": "Project-independent close-out validator"},
     {"role": "evidence", "path": "plugins/bouch-game-assets/evals/evals.json", "title": "Skill evaluation prompts"}
   ],
