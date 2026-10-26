@@ -9,7 +9,8 @@
   "source": {
     "repository": "bouch-plugins",
     "url": "https://github.com/paulieb89/bouch-plugins",
-    "note": "Initial package is being prepared in the plugin marketplace repository; pin a release ref before promoting this record to active."
+    "ref": "bouch-game-assets-v0.1.0",
+    "note": "Initial package release is pinned in the plugin marketplace repository; the tag must be published before remote Registry reads can succeed."
   },
   "native": {
     "spec": "agent-plugins",
