@@ -5,12 +5,12 @@
   "summary": "Evidence-led game and 3D asset production. Consult whenever an agent builds, imports, repairs, verifies, playtests or visually reviews a game-ready asset or scene. Separates source, import, deterministic runtime, real interaction and perceptual evidence; preserves immutable candidates and bounded repair lineage; closes out only on persisted evidence. Projects still own their engine/DCC adapters and runtime harnesses.",
   "domains": ["game-assets"],
   "tags": ["game-assets", "3d", "blender", "godot", "asset-verification", "candidate-lineage", "evidence", "human-review"],
-  "lifecycle": "experimental",
+  "lifecycle": "active",
   "source": {
     "repository": "bouch-plugins",
     "url": "https://github.com/paulieb89/bouch-plugins",
     "ref": "bouch-game-assets-v0.1.1",
-    "note": "Initial package release is pinned in the plugin marketplace repository; the tag must be published before remote Registry reads can succeed."
+    "note": "Initial package release is pinned to the published plugin marketplace tag."
   },
   "native": {
     "spec": "agent-plugins",
