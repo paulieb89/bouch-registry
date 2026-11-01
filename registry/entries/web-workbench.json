@@ -1,8 +1,8 @@
 {
   "id": "dev.bouch/web-workbench",
   "type": "reference-workbench",
-  "title": "Bouch Web Workbench V0.1",
-  "summary": "Frozen, qualified reference workbench for agent-driven web development with browser verification. Consult before building or checking a web page, or before inventing a way for an agent to see its rendered output: a calibrated capture instrument (Playwright and axe in Chromium at 375 and 1280 wide, at rest and in declared interaction states) that gates on console and request errors, serious accessibility violations, horizontal overflow and silent font fallback; a contract that requires reading the screenshots and keeps runtime evidence, deterministic checks, agent critique and human judgement separate; calibration against planted defects; and a pinned-container reproduction procedure. Requires Node 24 and a Chromium, or git and Docker to reproduce.",
+  "title": "Bouch Web Workbench V0.3",
+  "summary": "Frozen, qualified reference workbench for agent-driven web development with browser verification and visual-production review. Consult before building or checking a web page, or before inventing a way for an agent to see its rendered output: a calibrated Playwright and axe capture instrument in Chromium at 375 and 1280 wide, at rest and in declared interaction states, gating console and request errors, serious accessibility violations, horizontal overflow and silent font fallback; a visual-production contract for content authority, type and visual-direction studies, asset jobs, motion and state coverage, reduced-motion behaviour, and human screenshot critique; plus pinned-container reproduction. Requires Node 24 and Chromium, or git and Docker to reproduce.",
   "domains": [
     "web"
   ],
@@ -23,14 +23,19 @@
     "docker",
     "frozen-evidence",
     "interaction-states",
-    "forms"
+    "forms",
+    "visual-production",
+    "visual-direction",
+    "typography-review",
+    "asset-provenance",
+    "human-visual-review"
   ],
   "lifecycle": "frozen",
   "source": {
     "repository": "bouch-web-workbench",
     "url": "https://github.com/paulieb89/bouch-web-workbench",
-    "ref": "v0.2.0",
-    "note": "The qualified V0.1 release. The repository's main branch continues development and is not this record."
+    "ref": "v0.3.0",
+    "note": "The qualified V0.3 release, including the visual-production contract and acceptance template layered on the v0.2 interaction-state instrument. The repository's main branch continues development and is not this record."
   },
   "entrypoints": [
     {
@@ -42,6 +47,16 @@
       "role": "contract",
       "path": "README.md",
       "title": "Commands, capture evidence files, gates, calibration and machine bindings"
+    },
+    {
+      "role": "contract",
+      "path": "docs/visual-production.md",
+      "title": "Visual-production contract: direction, type, assets, states and human review"
+    },
+    {
+      "role": "contract",
+      "path": "task/visual-acceptance-template.md",
+      "title": "Reusable visual acceptance template"
     },
     {
       "role": "contract",
