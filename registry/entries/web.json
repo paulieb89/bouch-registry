@@ -1,0 +1,87 @@
+{
+  "id": "dev.bouch/web",
+  "type": "agent-plugin",
+  "title": "bouch-web",
+  "summary": "Portable, evidence-tiered web design knowledge for Bouch web work. Consult alongside the Web Workbench for visual direction, typography, component and interaction-state coverage, reference-site research, asset and licence boundaries, and human screenshot critique. The package includes one narrow typography Skill and references; the Workbench remains the authoritative rendered-output instrument. Fixture evidence is bounded and does not select a final typeface or turn taste prompts into automated gates.",
+  "domains": [
+    "web"
+  ],
+  "tags": [
+    "web-design",
+    "visual-direction",
+    "typography",
+    "interaction-states",
+    "accessibility",
+    "browser-verification",
+    "human-review",
+    "evidence-tiered",
+    "claude-code"
+  ],
+  "lifecycle": "experimental",
+  "source": {
+    "repository": "bouch-web",
+    "url": "https://github.com/paulieb89/bouch-web",
+    "ref": "v0.1.0",
+    "note": "Promoted experimental web-design knowledge package. Evidence and open limits are recorded in evidence/qualification.md; use with dev.bouch/web-workbench for rendered verification."
+  },
+  "native": {
+    "spec": "agent-plugins",
+    "manifest": "plugin.json"
+  },
+  "entrypoints": [
+    {
+      "role": "contract",
+      "path": "README.md",
+      "title": "Package boundary, evidence limits and use alongside the Workbench"
+    },
+    {
+      "role": "skill",
+      "path": "skills/bouch-web-typography/SKILL.md",
+      "title": "Web typography: obtain, licence-check, self-host and prove rendering"
+    },
+    {
+      "role": "knowledge",
+      "path": "references/evidence-status.md",
+      "title": "Evidence tiers, rendered-output levels and known gaps"
+    },
+    {
+      "role": "knowledge",
+      "path": "references/visual-direction-and-anti-slop.md",
+      "title": "Visual direction, tokens, asset jobs and anti-pattern review"
+    },
+    {
+      "role": "knowledge",
+      "path": "references/component-and-state-patterns.md",
+      "title": "Semantic components and interaction-state coverage"
+    },
+    {
+      "role": "knowledge",
+      "path": "references/reference-site-research-protocol.md",
+      "title": "Study reference sites without copying their implementation or claims"
+    },
+    {
+      "role": "knowledge",
+      "path": "references/font-loading-and-verification.md",
+      "title": "Self-hosted fonts, licensing boundaries and rendered verification"
+    },
+    {
+      "role": "tool",
+      "path": "scripts/validate-package.sh",
+      "title": "Offline package validator"
+    },
+    {
+      "role": "evidence",
+      "path": "evidence/PROVENANCE.md",
+      "title": "Source pins, hashes and bounded rendered evidence"
+    },
+    {
+      "role": "evidence",
+      "path": "evidence/qualification.md",
+      "title": "v0.1.0 package qualification and explicit non-claims"
+    }
+  ],
+  "related": [
+    "dev.bouch/web-workbench",
+    "dev.bouch/bouch-agent-core"
+  ]
+}
