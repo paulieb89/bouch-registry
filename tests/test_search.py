@@ -61,7 +61,7 @@ def test_plural_and_prefix_matching(registry):
 def test_discriminating_terms_outrank_common_ones(registry):
     """'bouch' appears in every id; 'reaper' in a few records. IDF must weight them accordingly."""
     def score(query):
-        return next(h.score for h in registry.search(query) if h.capability.id == "dev.bouch/reaper-mcp")
+        return next(h.score for h in registry.search(query, limit=50) if h.capability.id == "dev.bouch/reaper-mcp")
 
     assert score("reaper") > 5 * score("bouch")
 
