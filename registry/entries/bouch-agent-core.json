@@ -9,7 +9,7 @@
   "source": {
     "repository": "bouch-agent-core",
     "url": "https://github.com/paulieb89/bouch-agent-core",
-    "ref": "v0.2.5"
+    "ref": "v0.2.6"
   },
   "native": {
     "spec": "agent-plugins",
