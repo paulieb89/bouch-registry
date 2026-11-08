@@ -2,14 +2,14 @@
   "id": "dev.bouch/bouch-agent-core",
   "type": "agent-plugin",
   "title": "bouch-agent-core",
-  "summary": "Portable Bouch methodology package. Consult when about to extend an agent harness with a new tool or integration, when an environment is unfamiliar or has drifted (recon), when writing or reviewing a project /prime, or when deciding whether and how to freeze verified evidence. Provider-neutral Skills plus shared references distilled from the cross-domain harness model.",
+  "summary": "Portable Bouch methodology package. Consult when about to extend an agent harness with a new tool or integration, when an environment is unfamiliar or has drifted (recon), when writing or reviewing a project /prime, when deciding whether and how to freeze verified evidence, or when authoring durable handoffs between sessions or agents. Provider-neutral Skills plus shared references distilled from the cross-domain harness model.",
   "domains": ["agent-harness"],
-  "tags": ["methodology", "skills", "prime", "recon", "harness-extension", "evidence-freeze", "claude-code", "codex"],
+  "tags": ["methodology", "skills", "prime", "recon", "harness-extension", "evidence-freeze", "handoff", "claude-code", "codex"],
   "lifecycle": "active",
   "source": {
     "repository": "bouch-agent-core",
     "url": "https://github.com/paulieb89/bouch-agent-core",
-    "ref": "v0.2.4"
+    "ref": "v0.2.5"
   },
   "native": {
     "spec": "agent-plugins",
@@ -22,6 +22,8 @@
     {"role": "skill", "path": "skills/prime-authoring/SKILL.md", "title": "Authoring a project /prime"},
     {"role": "skill", "path": "skills/evidence-freeze/SKILL.md", "title": "Freezing verified evidence"},
     {"role": "skill", "path": "skills/bouch-project-routing/SKILL.md", "title": "Bouch project routing"},
+    {"role": "skill", "path": "skills/handoff-authoring/SKILL.md", "title": "Authoring durable handoffs"},
+    {"role": "knowledge", "path": "skills/handoff-authoring/references/TEMPLATE-handoff.md", "title": "Handoff templates"},
     {"role": "knowledge", "path": "references/cross-domain-harness-model.md", "title": "Cross-domain harness model"},
     {"role": "knowledge", "path": "references/derive-vs-persist.md", "title": "Derive vs persist"}
   ],
