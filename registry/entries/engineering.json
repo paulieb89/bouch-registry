@@ -1,0 +1,23 @@
+{
+  "id": "dev.bouch/engineering",
+  "type": "agent-plugin",
+  "title": "bouch-engineering",
+  "summary": "Specialist engineering evidence assessment for native coding agents. Consult when a result needs independent verification, evidence conflicts, a change must be attributed across agents or a dirty working tree, or a clean instrument result needs a known-positive control. Its added value over native agents is stated as unproven by its own marketplace docs.",
+  "domains": ["agent-harness"],
+  "tags": ["engineering", "verification", "evidence", "provenance", "attribution", "agent-sessions", "skills", "claude-code"],
+  "lifecycle": "experimental",
+  "source": {
+    "repository": "bouch-plugins",
+    "url": "https://github.com/paulieb89/bouch-plugins",
+    "note": "Marketplace plugin at plugins/bouch-engineering (v0.1.0). No per-plugin release tag exists yet, so the record resolves the remote HEAD; pin a bouch-engineering-v* tag when one is cut."
+  },
+  "native": {
+    "spec": "agent-plugins",
+    "manifest": "plugins/bouch-engineering/plugin.json"
+  },
+  "entrypoints": [
+    {"role": "skill", "path": "plugins/bouch-engineering/skills/engineering-evidence/SKILL.md", "title": "Assess provenance and strength of engineering evidence"},
+    {"role": "contract", "path": "plugins/bouch-engineering/plugin.json", "title": "Portable plugin manifest (name, version, boundary)"}
+  ],
+  "related": ["dev.bouch/bouch-agent-core", "dev.bouch/supervision", "dev.bouch/sessinspect"]
+}
