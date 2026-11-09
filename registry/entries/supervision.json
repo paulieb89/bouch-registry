@@ -3,21 +3,41 @@
   "type": "agent-plugin",
   "title": "bouch-supervision",
   "summary": "Development supervision across sessions. Consult when starting or resuming project work without the prior conversation, choosing whether to work directly or delegate to a coding agent, assessing a worker's evidence, or carrying work forward with a durable handoff. Project-local files, not a memory service.",
-  "domains": ["agent-harness"],
-  "tags": ["supervision", "continuity", "handoff", "delegation", "session-recovery", "evidence", "skills", "claude-code", "codex"],
+  "domains": [
+    "agent-harness"
+  ],
+  "tags": [
+    "supervision",
+    "continuity",
+    "handoff",
+    "delegation",
+    "session-recovery",
+    "evidence",
+    "skills",
+    "claude-code",
+    "codex"
+  ],
   "lifecycle": "experimental",
   "source": {
     "repository": "bouch-plugins",
     "url": "https://github.com/paulieb89/bouch-plugins",
-    "note": "Marketplace plugin at plugins/bouch-supervision (v0.1.1). No per-plugin release tag exists yet, so the record resolves the remote HEAD; pin a bouch-supervision-v* tag when one is cut."
+    "note": "Pinned to the published plugin marketplace tag; bump ref when a newer per-plugin tag is cut.",
+    "ref": "bouch-supervision-v0.1.1"
   },
   "native": {
     "spec": "agent-plugins",
     "manifest": "plugins/bouch-supervision/plugin.json"
   },
   "entrypoints": [
-    {"role": "skill", "path": "plugins/bouch-supervision/skills/bouch-supervision/SKILL.md", "title": "Recover, execute/delegate, inspect, continue across sessions"},
-    {"role": "contract", "path": "plugins/bouch-supervision/plugin.json", "title": "Portable plugin manifest (name, version, boundary)"}
+    {
+      "role": "skill",
+      "path": "plugins/bouch-supervision/skills/bouch-supervision/SKILL.md",
+      "title": "Recover, execute/delegate, inspect, continue across sessions"
+    }
   ],
-  "related": ["dev.bouch/bouch-agent-core", "dev.bouch/engineering", "dev.bouch/sessinspect"]
+  "related": [
+    "dev.bouch/bouch-agent-core",
+    "dev.bouch/engineering",
+    "dev.bouch/sessinspect"
+  ]
 }
