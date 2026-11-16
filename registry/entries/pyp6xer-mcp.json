@@ -1,0 +1,41 @@
+{
+  "id": "dev.bouch/pyp6xer-mcp",
+  "type": "mcp-server",
+  "title": "PyP6XER MCP",
+  "summary": "MCP server for analysing, comparing, editing and exporting Primavera P6 XER schedules \u2014 programme/project-controls data over MCP. Published to PyPI.",
+  "domains": [
+    "project-controls"
+  ],
+  "tags": [
+    "p6",
+    "xer",
+    "primavera",
+    "schedules",
+    "project-controls",
+    "mcp",
+    "pypi"
+  ],
+  "lifecycle": "experimental",
+  "source": {
+    "repository": "pyp6xer-mcp",
+    "url": "https://github.com/paulieb89/pyp6xer-mcp",
+    "ref": "v1.2.2"
+  },
+  "native": {
+    "spec": "mcp-server-json",
+    "manifest": null,
+    "note": "No server.json and not on the official MCP Registry."
+  },
+  "entrypoints": [
+    {
+      "role": "contract",
+      "path": "README.md",
+      "title": "Analysis and export tools"
+    },
+    {
+      "role": "contract",
+      "path": "AGENTS.md",
+      "title": "Agent instructions"
+    }
+  ]
+}

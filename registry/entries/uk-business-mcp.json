@@ -1,0 +1,47 @@
+{
+  "id": "dev.bouch/uk-business-mcp",
+  "type": "mcp-server",
+  "title": "UK Business MCP (ledgerhall)",
+  "summary": "One MCP server for UK business \u2014 GOV.UK, legal, due-diligence and property tools behind a single URL (uk-business-mcp.fly.dev). The 'ledgerhall' umbrella; the backend the foundations and legal-os skills assume.",
+  "domains": [
+    "uk-public-data"
+  ],
+  "tags": [
+    "uk-business",
+    "ledgerhall",
+    "umbrella",
+    "govuk",
+    "due-diligence",
+    "property",
+    "mcp"
+  ],
+  "lifecycle": "active",
+  "source": {
+    "repository": "uk-business-mcp",
+    "url": "https://github.com/paulieb89/uk-business-mcp",
+    "ref": "v0.3.1"
+  },
+  "native": {
+    "spec": "mcp-server-json",
+    "manifest": null,
+    "note": "No server.json; registered on Glama rather than the official MCP Registry."
+  },
+  "entrypoints": [
+    {
+      "role": "contract",
+      "path": "README.md",
+      "title": "Tool surface and single-URL setup"
+    },
+    {
+      "role": "contract",
+      "path": "AGENTS.md",
+      "title": "Agent instructions"
+    }
+  ],
+  "related": [
+    "dev.bouch/uk-legal-mcp",
+    "dev.bouch/uk-due-diligence-mcp",
+    "dev.bouch/property-shared",
+    "dev.bouch/govuk-mcp"
+  ]
+}

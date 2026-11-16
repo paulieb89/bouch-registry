@@ -2,7 +2,7 @@
   {
     "id": "agent-harness",
     "title": "Agent harness methodology",
-    "summary": "How Bouch builds and verifies agent harnesses across domains: durable contracts, progressive knowledge (Skills), capability preference order, domain-native verification, governance, /prime vs recon, and observability of session history. Consult before designing a new harness, Skill, plugin, registry or evaluation approach — the standards research and cross-domain model already exist."
+    "summary": "How Bouch builds and verifies agent harnesses across domains: durable contracts, progressive knowledge (Skills), capability preference order, domain-native verification, governance, /prime vs recon, and observability of session history. Consult before designing a new harness, Skill, plugin, registry or evaluation approach \u2014 the standards research and cross-domain model already exist."
   },
   {
     "id": "audio",
@@ -18,5 +18,30 @@
     "id": "game-assets",
     "title": "Game and 3D asset production",
     "summary": "Evidence-led game and 3D asset work: source structure, target-engine import, deterministic runtime checks, real interaction, integrity and candidate lineage, then human visual review. The portable package supplies procedure and close-out tooling; each project owns its engine/DCC adapter, fixtures, runtime harness and visual contract."
+  },
+  {
+    "id": "uk-public-data",
+    "title": "UK public and official data services",
+    "summary": "MCP servers over UK official and public sources \u2014 legal research and case law, due diligence (Companies House, HMLR, sanctions), tax rule packs, procurement (OCDS tenders), GOV.UK search, FOI requests, civic information. Mix of live Fly deployments and local-only servers; per-record summaries carry the deployment truth."
+  },
+  {
+    "id": "property",
+    "title": "UK property data and tooling",
+    "summary": "UK property data services \u2014 Land Registry comparables, Rightmove listings, EPC, rental and stamp-duty analysis, listing copy generation. property-shared is the live backend; narrower generators sit alongside it."
+  },
+  {
+    "id": "trading",
+    "title": "Trading and market tooling",
+    "summary": "Trading-side tooling \u2014 Pine Script v6 documentation over MCP, with room for the wider forex/MT5 tooling family."
+  },
+  {
+    "id": "astrology",
+    "title": "Astrology services",
+    "summary": "Astrology computation served over MCP (Celestine engine, FastMCP surface)."
+  },
+  {
+    "id": "project-controls",
+    "title": "Project controls and schedules",
+    "summary": "Programme and project-controls data \u2014 Primavera P6 XER schedule analysis, comparison, editing and export over MCP."
   }
 ]

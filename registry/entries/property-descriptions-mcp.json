@@ -1,0 +1,43 @@
+{
+  "id": "dev.bouch/property-descriptions-mcp",
+  "type": "mcp-server",
+  "title": "Property Descriptions MCP",
+  "summary": "UK property listing description generator \u2014 fetch comparables, EPC ratings and Rightmove listings for a postcode or address, then write three copy variants (Rightmove, social, email).",
+  "domains": [
+    "property"
+  ],
+  "tags": [
+    "uk-property",
+    "listings",
+    "rightmove",
+    "epc",
+    "copywriting",
+    "mcp"
+  ],
+  "lifecycle": "experimental",
+  "source": {
+    "repository": "property-descriptions-mcp",
+    "url": "https://github.com/paulieb89/property-descriptions-mcp",
+    "ref": "v0.2.5"
+  },
+  "native": {
+    "spec": "mcp-server-json",
+    "manifest": null,
+    "note": "No server.json and not on the official MCP Registry."
+  },
+  "entrypoints": [
+    {
+      "role": "contract",
+      "path": "README.md",
+      "title": "Inputs and copy variants"
+    },
+    {
+      "role": "contract",
+      "path": "AGENTS.md",
+      "title": "Agent instructions"
+    }
+  ],
+  "related": [
+    "dev.bouch/property-shared"
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "id": "dev.bouch/uk-due-diligence-mcp",
+  "type": "mcp-server",
+  "title": "UK Due Diligence MCP",
+  "summary": "Official-source UK due-diligence data for agents \u2014 Companies House, Charity Commission, HMLR, Gazette, sanctions. Deployed on Fly (production and staging); published to the official MCP Registry.",
+  "domains": [
+    "uk-public-data"
+  ],
+  "tags": [
+    "due-diligence",
+    "companies-house",
+    "land-registry",
+    "sanctions",
+    "charity-commission",
+    "mcp"
+  ],
+  "lifecycle": "active",
+  "source": {
+    "repository": "uk-due-diligence-mcp",
+    "url": "https://github.com/paulieb89/uk-due-diligence-mcp",
+    "ref": "v1.6.3"
+  },
+  "native": {
+    "spec": "mcp-server-json",
+    "manifest": "server.json"
+  },
+  "entrypoints": [
+    {
+      "role": "contract",
+      "path": "README.md",
+      "title": "Coverage and install"
+    }
+  ]
+}

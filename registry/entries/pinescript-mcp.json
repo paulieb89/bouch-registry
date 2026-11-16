@@ -1,0 +1,38 @@
+{
+  "id": "dev.bouch/pinescript-mcp",
+  "type": "mcp-server",
+  "title": "Pine Script MCP",
+  "summary": "MCP server providing Pine Script v6 documentation for AI assistants \u2014 TradingView scripting reference over MCP. Published to PyPI.",
+  "domains": [
+    "trading"
+  ],
+  "tags": [
+    "pine-script",
+    "tradingview",
+    "docs",
+    "mcp",
+    "pypi"
+  ],
+  "lifecycle": "experimental",
+  "source": {
+    "repository": "pinescript-mcp",
+    "url": "https://github.com/paulieb89/pinescript-mcp",
+    "ref": "v0.7.6"
+  },
+  "native": {
+    "spec": "mcp-server-json",
+    "manifest": "server.json"
+  },
+  "entrypoints": [
+    {
+      "role": "contract",
+      "path": "README.md",
+      "title": "Docs coverage"
+    },
+    {
+      "role": "contract",
+      "path": "AGENTS.md",
+      "title": "Agent instructions"
+    }
+  ]
+}

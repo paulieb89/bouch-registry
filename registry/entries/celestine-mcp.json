@@ -1,0 +1,38 @@
+{
+  "id": "dev.bouch/celestine-mcp",
+  "type": "mcp-server",
+  "title": "Celestine MCP",
+  "summary": "Astrology MCP server \u2014 canonical FastMCP implementation with a Celestine TypeScript engine bridged over Node.",
+  "domains": [
+    "astrology"
+  ],
+  "tags": [
+    "astrology",
+    "celestine",
+    "mcp",
+    "fastmcp"
+  ],
+  "lifecycle": "experimental",
+  "source": {
+    "repository": "celestine-mcp",
+    "url": "https://github.com/paulieb89/celestine-mcp",
+    "ref": "v0.1.1"
+  },
+  "native": {
+    "spec": "mcp-server-json",
+    "manifest": null,
+    "note": "No server.json and not on the official MCP Registry."
+  },
+  "entrypoints": [
+    {
+      "role": "contract",
+      "path": "README.md",
+      "title": "Architecture and tools"
+    },
+    {
+      "role": "contract",
+      "path": "AGENTS.md",
+      "title": "Agent instructions"
+    }
+  ]
+}

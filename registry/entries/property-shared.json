@@ -1,0 +1,43 @@
+{
+  "id": "dev.bouch/property-shared",
+  "type": "mcp-server",
+  "title": "Property Shared MCP",
+  "summary": "UK property data MCP server and API \u2014 Land Registry comparable sales, Rightmove listings, EPC certificates (England & Wales), rental analysis, stamp duty. Deployed on Fly at property-shared.fly.dev; the property skill backend.",
+  "domains": [
+    "property"
+  ],
+  "tags": [
+    "uk-property",
+    "land-registry",
+    "rightmove",
+    "epc",
+    "rental",
+    "stamp-duty",
+    "mcp"
+  ],
+  "lifecycle": "active",
+  "source": {
+    "repository": "property-shared",
+    "url": "https://github.com/paulieb89/property-shared",
+    "ref": "v1.20.0"
+  },
+  "native": {
+    "spec": "mcp-server-json",
+    "manifest": "server.json"
+  },
+  "entrypoints": [
+    {
+      "role": "contract",
+      "path": "README.md",
+      "title": "Tools and install"
+    },
+    {
+      "role": "knowledge",
+      "path": "USER_GUIDE.md",
+      "title": "User guide"
+    }
+  ],
+  "related": [
+    "dev.bouch/web"
+  ]
+}

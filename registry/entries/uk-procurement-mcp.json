@@ -1,0 +1,35 @@
+{
+  "id": "dev.bouch/uk-procurement-mcp",
+  "type": "mcp-server",
+  "title": "UK Procurement MCP (Tenderwright)",
+  "summary": "UK public procurement intelligence MCP server \u2014 the Tenderwright data layer. Find a Tender + Contracts Finder OCDS data behind a nightly-ingested local store.",
+  "domains": [
+    "uk-public-data"
+  ],
+  "tags": [
+    "procurement",
+    "tenders",
+    "ocds",
+    "contracts-finder",
+    "tenderwright",
+    "mcp"
+  ],
+  "lifecycle": "experimental",
+  "source": {
+    "repository": "uk-procurement-mcp",
+    "url": "https://github.com/paulieb89/uk-procurement-mcp",
+    "ref": "fly-v9"
+  },
+  "native": {
+    "spec": "mcp-server-json",
+    "manifest": null,
+    "note": "No server.json and not on the official MCP Registry."
+  },
+  "entrypoints": [
+    {
+      "role": "contract",
+      "path": "README.md",
+      "title": "Data layer and tooling"
+    }
+  ]
+}

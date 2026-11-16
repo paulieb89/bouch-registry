@@ -49,8 +49,9 @@ def test_browse_domain_without_query_lists_every_member_deterministically(regist
 
 
 def test_type_filter(registry):
-    hits = registry.search("", type="mcp-server")
-    assert ids(hits) == ["dev.bouch/reaper-mcp"]
+    hits = registry.search("", type="mcp-server", limit=50)
+    assert ids(hits) == sorted(c.id for c in registry.capabilities if c.type == "mcp-server")
+    assert all(h.capability.type == "mcp-server" for h in hits)
 
 
 def test_plural_and_prefix_matching(registry):

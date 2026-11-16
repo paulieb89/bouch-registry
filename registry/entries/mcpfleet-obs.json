@@ -1,0 +1,30 @@
+{
+  "id": "dev.bouch/mcpfleet-obs",
+  "type": "observability-tool",
+  "title": "mcpfleet-obs",
+  "summary": "Shared error taxonomy, metrics middleware and client tracking for the mcpfleet MCP servers \u2014 one call installs the whole observability stack. Fleet infrastructure, not a domain service.",
+  "domains": [
+    "agent-harness"
+  ],
+  "tags": [
+    "observability",
+    "metrics",
+    "error-taxonomy",
+    "mcp",
+    "mcpfleet",
+    "middleware"
+  ],
+  "lifecycle": "experimental",
+  "source": {
+    "repository": "mcpfleet-obs",
+    "url": "https://github.com/uk-agents/mcpfleet-obs",
+    "ref": "v0.6.0"
+  },
+  "entrypoints": [
+    {
+      "role": "contract",
+      "path": "README.md",
+      "title": "What it installs"
+    }
+  ]
+}
