@@ -1,0 +1,90 @@
+{
+  "id": "dev.bouch/uk-legal-mcp",
+  "type": "mcp-server",
+  "title": "UK Legal MCP",
+  "summary": "UK legal research MCP server \u2014 case law, legislation, parliament, bills, votes, committees, citations, HMRC. Deployed on Fly at uk-legal-mcp.fly.dev (plus a staging instance); published to PyPI and the official MCP Registry.",
+  "domains": [
+    "uk-public-data"
+  ],
+  "tags": [
+    "uk-legal",
+    "case-law",
+    "legislation",
+    "parliament",
+    "hmrc",
+    "mcp",
+    "pypi"
+  ],
+  "lifecycle": "active",
+  "source": {
+    "repository": "uk-legal-mcp",
+    "url": "https://github.com/paulieb89/uk-legal-mcp",
+    "ref": "v0.10.0"
+  },
+  "native": {
+    "spec": "mcp-server-json",
+    "manifest": "server.json"
+  },
+  "entrypoints": [
+    {
+      "role": "contract",
+      "path": "README.md",
+      "title": "What the server covers and how to install"
+    },
+    {
+      "role": "knowledge",
+      "path": "docs/lawyer-guide.md",
+      "title": "Lawyer guide"
+    },
+    {
+      "role": "knowledge",
+      "path": "docs/tool-reference.md",
+      "title": "Tool reference"
+    },
+    {
+      "role": "knowledge",
+      "path": "docs/api-reference.md",
+      "title": "API reference"
+    },
+    {
+      "role": "knowledge",
+      "path": "CHANGELOG.md",
+      "title": "Changelog"
+    },
+    {
+      "role": "evidence",
+      "path": "assets/images/readme/worker-protection-duty-extent.png",
+      "title": "Worker protection verification figure"
+    },
+    {
+      "role": "evidence",
+      "path": "assets/images/readme/automated-vehicles-amendment-division.png",
+      "title": "Automated vehicles division figure"
+    },
+    {
+      "role": "evidence",
+      "path": "assets/images/readme/kession-capital-case-verification.png",
+      "title": "Kession Capital case verification figure"
+    },
+    {
+      "role": "evidence",
+      "path": "assets/images/readme/automated-vehicles-act-section.png",
+      "title": "Automated Vehicles Act section figure"
+    },
+    {
+      "role": "evidence",
+      "path": "assets/images/readme/randerson-hansard-contributions.png",
+      "title": "Hansard contributions figure"
+    },
+    {
+      "role": "evidence",
+      "path": "assets/images/readme/hansard-column-prompt-trace.png",
+      "title": "Hansard prompt trace figure"
+    },
+    {
+      "role": "evidence",
+      "path": "assets/images/readme/hansard-column-result-caveat.png",
+      "title": "Hansard result caveat figure"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "id": "dev.bouch/uk-civic-ai",
+  "type": "mcp-server",
+  "title": "UK Civic AI",
+  "summary": "Free civic AI assistant serving information from UK public records, legislation, and government sources. Early-stage: no release tags; pinned to a commit.",
+  "domains": [
+    "uk-public-data"
+  ],
+  "tags": [
+    "civic",
+    "uk-public-records",
+    "legislation",
+    "mcp"
+  ],
+  "lifecycle": "experimental",
+  "source": {
+    "repository": "uk-civic-ai",
+    "url": "https://github.com/paulieb89/uk-civic-ai",
+    "ref": "451c4172cb3fd27fda58ea8f8d22e92e02b13ba3"
+  },
+  "native": {
+    "spec": "mcp-server-json",
+    "manifest": null,
+    "note": "No server.json and not on the official MCP Registry."
+  },
+  "entrypoints": [
+    {
+      "role": "contract",
+      "path": "README.md",
+      "title": "What it serves"
+    }
+  ]
+}

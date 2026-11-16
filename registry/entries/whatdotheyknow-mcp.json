@@ -1,0 +1,38 @@
+{
+  "id": "dev.bouch/whatdotheyknow-mcp",
+  "type": "mcp-server",
+  "title": "WhatDoTheyKnow MCP",
+  "summary": "WhatDoTheyKnow MCP server \u2014 search and read UK Freedom of Information requests, authorities, and responses. Published to PyPI.",
+  "domains": [
+    "uk-public-data"
+  ],
+  "tags": [
+    "foi",
+    "whatdotheyknow",
+    "uk-transparency",
+    "mcp",
+    "pypi"
+  ],
+  "lifecycle": "experimental",
+  "source": {
+    "repository": "whatdotheyknow-mcp",
+    "url": "https://github.com/paulieb89/whatdotheyknow-mcp",
+    "ref": "v0.1.3"
+  },
+  "native": {
+    "spec": "mcp-server-json",
+    "manifest": "server.json"
+  },
+  "entrypoints": [
+    {
+      "role": "contract",
+      "path": "README.md",
+      "title": "Tools and install"
+    },
+    {
+      "role": "contract",
+      "path": "AGENTS.md",
+      "title": "Agent instructions"
+    }
+  ]
+}

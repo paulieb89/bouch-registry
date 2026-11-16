@@ -1,0 +1,37 @@
+{
+  "id": "dev.bouch/bailii-mcp",
+  "type": "mcp-server",
+  "title": "BAILII MCP",
+  "summary": "Search UK case law on BAILII \u2014 court judgments with section extraction. Runs locally only: BAILII blocks cloud IPs, so there is no hosted deployment by design.",
+  "domains": [
+    "uk-public-data"
+  ],
+  "tags": [
+    "bailii",
+    "case-law",
+    "judgments",
+    "uk-legal",
+    "mcp",
+    "local-only"
+  ],
+  "lifecycle": "experimental",
+  "source": {
+    "repository": "bailii-mcp",
+    "url": "https://github.com/paulieb89/bailii-mcp",
+    "ref": "v1.0.2"
+  },
+  "native": {
+    "spec": "mcp-server-json",
+    "manifest": "server.json"
+  },
+  "entrypoints": [
+    {
+      "role": "contract",
+      "path": "README.md",
+      "title": "Local-run constraint and usage"
+    }
+  ],
+  "related": [
+    "dev.bouch/uk-legal-mcp"
+  ]
+}

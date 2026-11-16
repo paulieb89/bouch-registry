@@ -1,0 +1,39 @@
+{
+  "id": "dev.bouch/govuk-mcp",
+  "type": "mcp-server",
+  "title": "GOV.UK MCP",
+  "summary": "MCP server for GOV.UK \u2014 search, content, organisations and postcode lookup. Published to PyPI.",
+  "domains": [
+    "uk-public-data"
+  ],
+  "tags": [
+    "govuk",
+    "postcode",
+    "search",
+    "mcp",
+    "pypi"
+  ],
+  "lifecycle": "experimental",
+  "source": {
+    "repository": "govuk-mcp",
+    "url": "https://github.com/paulieb89/govuk-mcp",
+    "ref": "v0.3.1"
+  },
+  "native": {
+    "spec": "mcp-server-json",
+    "manifest": null,
+    "note": "No server.json and not on the official MCP Registry."
+  },
+  "entrypoints": [
+    {
+      "role": "contract",
+      "path": "README.md",
+      "title": "Tools and install"
+    },
+    {
+      "role": "contract",
+      "path": "AGENTS.md",
+      "title": "Agent instructions"
+    }
+  ]
+}
