@@ -2,7 +2,7 @@
   "id": "dev.bouch/capability-routing-index",
   "type": "routing-pointer",
   "title": "Capability routing index and cross-domain harness model",
-  "summary": "Superseded historical record. The routing index was the hand-maintained predecessor of this registry: a pointer document routing to where each Bouch domain's harness facts live (Battlebuild/asset work, REAPER/audio, UK legal, UK due diligence, linear media). Do not route from it — it drifted, and the document itself is now marked HISTORICAL / SUPERSEDED. Kept because it still carries the frozen cross-domain harness model and /prime contract V1, whose portable successors are bouch-agent-core's own references.",
+  "summary": "Superseded historical record. The routing index was the hand-maintained predecessor of this registry: a pointer document routing to where each Bouch domain's harness facts live (Battlebuild/asset work, REAPER/audio, UK legal, UK due diligence, linear media). Do not route from it — it drifted, and the document itself is now marked HISTORICAL / SUPERSEDED. Kept because it still carries the frozen cross-domain harness model and /prime contract V1, whose portable successors are bouch-agent-core's bouch-project-routing and prime-authoring skills.",
   "domains": ["agent-harness", "audio"],
   "tags": ["routing", "index", "cross-domain", "prime", "harness-model", "superseded", "historical"],
   "lifecycle": "deprecated",
