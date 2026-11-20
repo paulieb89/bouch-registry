@@ -1,4 +1,4 @@
-"""bouch-registry command line: serve, validate, export, verify-sources."""
+"""bouch-registry command line: validate, search, export, verify-sources."""
 
 from __future__ import annotations
 
@@ -17,13 +17,16 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--data", type=Path, default=DEFAULT_ROOT, help="registry data directory")
     sub = parser.add_subparsers(dest="command")
 
-    p_serve = sub.add_parser("serve", help="run the MCP server over streamable HTTP (default)")
-    p_serve.add_argument("--host", default="127.0.0.1")
-    p_serve.add_argument("--port", type=int)
+    sub.add_parser("validate", help="validate registry data and exit (default)")
 
-    sub.add_parser("validate", help="validate registry data and exit")
+    p_search = sub.add_parser("search", help="search records by keyword; empty query lists everything")
+    p_search.add_argument("query", nargs="?", default="")
+    p_search.add_argument("--domain")
+    p_search.add_argument("--type", dest="type_")
+    p_search.add_argument("--limit", type=int, default=10)
+    p_search.add_argument("--json", action="store_true", help="print full records as JSON")
 
-    p_export = sub.add_parser("export", help="write the static registry.json")
+    p_export = sub.add_parser("export", help="write the whole registry as one JSON document")
     p_export.add_argument("output", type=Path, nargs="?", help="output file (default: stdout)")
 
     p_verify = sub.add_parser(
@@ -34,13 +37,9 @@ def main(argv: list[str] | None = None) -> int:
         "--checkout", action="append", default=[], metavar="REPOSITORY=PATH",
         help="map a source repository name to a local checkout; repeatable. Never stored in the registry.",
     )
-    p_verify.add_argument(
-        "--remote", action="store_true",
-        help="instead, read every declared pointer of published records from its remote source, as MCP clients do",
-    )
 
     args = parser.parse_args(argv)
-    command = args.command or "serve"
+    command = args.command or "validate"
 
     try:
         registry = load_registry(args.data)
@@ -48,11 +47,6 @@ def main(argv: list[str] | None = None) -> int:
         print(exc, file=sys.stderr)
         return 1
 
-    if command == "serve":
-        from .server import serve
-
-        serve(registry, host=getattr(args, "host", "127.0.0.1"), port=getattr(args, "port", None))
-        return 0
     if command == "validate":
         print(f"ok: {len(registry.capabilities)} capabilities in {len(registry.domains)} domains")
         return 0
@@ -63,10 +57,15 @@ def main(argv: list[str] | None = None) -> int:
         else:
             sys.stdout.write(text)
         return 0
-    if command == "verify-sources" and args.remote:
-        import asyncio
-
-        return asyncio.run(verify_remote(registry))
+    if command == "search":
+        hits = registry.search(args.query, domain=args.domain, type=args.type_, limit=args.limit)
+        if args.json:
+            records = [h.capability.model_dump(mode="json", exclude_none=True) for h in hits]
+            sys.stdout.write(json.dumps(records, indent=2, ensure_ascii=False) + "\n")
+        else:
+            for h in hits:
+                print(f"{h.capability.id}  [{h.capability.type}, {h.capability.lifecycle}]  {h.capability.summary}")
+        return 0
     if command == "verify-sources":
         checkouts = dict(item.split("=", 1) for item in args.checkout)
         return verify_sources(registry, {k: Path(v).expanduser() for k, v in checkouts.items()})
@@ -78,8 +77,6 @@ def verify_sources(registry: Registry, checkouts: dict[str, Path]) -> int:
     """Check pointers against the versioned source: paths must exist in git at source.ref, else HEAD.
 
     Uncommitted files do not count — the registry points at versioned sources.
-    For records with a published source, links in declared Markdown must also
-    point at declared paths, since remote readers can follow nothing else.
     """
     failures = 0
     for cap in registry.capabilities:
@@ -95,50 +92,12 @@ def verify_sources(registry: Registry, checkouts: dict[str, Path]) -> int:
             ok = subprocess.run(["git", "-C", str(repo), "cat-file", "-e", f"{rev}:{path}"], capture_output=True).returncode == 0
             print(f"{'ok  ' if ok else 'FAIL'} {cap.id}: {rev}:{path}")
             failures += not ok
-            if ok and cap.source.url is not None and path.endswith(".md"):
-                text = subprocess.run(["git", "-C", str(repo), "show", f"{rev}:{path}"], capture_output=True, text=True).stdout
-                failures += _report_links(cap, path, text)
         if cap.native and cap.native.manifest and not cap.native.manifest.startswith("https://"):
             problem = _native_manifest_problem(repo, rev, cap.native.spec, cap.native.manifest)
             print(f"{'FAIL' if problem else 'ok  '} {cap.id}: native {cap.native.spec} manifest {problem or 'is well-formed'}")
             failures += bool(problem)
     print(f"{failures} failure(s)")
     return 1 if failures else 0
-
-
-async def verify_remote(registry: Registry) -> int:
-    """Resolve every declared path of every published record exactly as the bouch://source resource does."""
-    import httpx
-
-    from .remote import SourceError, declared_paths, read_declared
-
-    failures = 0
-    async with httpx.AsyncClient() as client:
-        for cap in registry.capabilities:
-            if cap.source.url is None:
-                print(f"SKIP {cap.id}: source not published remotely")
-                continue
-            for path in declared_paths(cap):
-                try:
-                    doc = await read_declared(cap, path, client)
-                except SourceError as exc:
-                    print(f"FAIL {cap.id}: {exc}")
-                    failures += 1
-                    continue
-                print(f"ok   {cap.id}: {doc.ref or 'HEAD'}@{doc.commit[:12]}:{path} blob {doc.blob[:12]}")
-                failures += _report_links(cap, path, doc.text)
-    print(f"{failures} failure(s)")
-    return 1 if failures else 0
-
-
-def _report_links(cap, path: str, text: str) -> int:
-    """Remote-readable records: every repo-relative file link in a declared Markdown entrypoint must be declared."""
-    from .remote import undeclared_links
-
-    problems = undeclared_links(cap, path, text)
-    for problem in problems:
-        print(f"FAIL {cap.id}: {problem}")
-    return len(problems)
 
 
 def _native_manifest_problem(repo: Path, rev: str, spec: str, path: str) -> str | None:

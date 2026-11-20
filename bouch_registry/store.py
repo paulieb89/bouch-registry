@@ -20,8 +20,6 @@ from .model import NATIVE_SPECS, Capability, Domain
 
 DEFAULT_ROOT = Path(__file__).resolve().parent.parent / "registry"
 
-RESOURCE_PREFIX = "bouch://"
-
 
 class RegistryError(Exception):
     """The registry data is invalid. Carries every problem found, not just the first."""
@@ -29,14 +27,6 @@ class RegistryError(Exception):
     def __init__(self, problems: list[str]):
         self.problems = problems
         super().__init__("invalid registry:\n  " + "\n  ".join(problems))
-
-
-def capability_uri(capability_id: str) -> str:
-    return f"{RESOURCE_PREFIX}capabilities/{capability_id}"
-
-
-def domain_uri(domain_id: str) -> str:
-    return f"{RESOURCE_PREFIX}domains/{domain_id}"
 
 
 @dataclass(frozen=True)
@@ -70,7 +60,7 @@ class Registry:
         return _search(self, query, domain, type, limit)
 
     def to_json(self) -> dict[str, Any]:
-        """The static machine-readable registry (served as /registry.json)."""
+        """The whole registry as one JSON document (`bouch-registry export`)."""
         return {
             "registry": "dev.bouch/registry",
             "native_specs": {

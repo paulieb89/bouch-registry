@@ -1,28 +1,16 @@
 # bouch-registry
 
-Bouch capability metaregistry served over MCP (FastMCP 3, streamable HTTP) and
-as a static `/registry.json`. See README.md for the record format and surface.
+The Bouch capability catalogue: pointer records in `registry/`, a pydantic schema and a local CLI. See README.md for the record format. The hosted MCP service has been retired; don't reintroduce a server without a demonstrated need.
 
 ## Invariants
 
-- `registry/` is the only dataset. Never add a second copy (generated
-  `registry.json` files are exports, not sources — do not commit one).
-- Records are pointers. Do not copy native manifest content (versions,
-  keywords, tool lists, packages) into records; the model forbids unknown
-  fields — do not loosen `extra="forbid"` to make data fit.
-- No machine-local paths in records: paths are relative to the source
-  repository root. Checkout locations are passed to `verify-sources` on the
-  command line only.
-- Point only at committed files. Run `verify-sources` against real checkouts
-  after changing pointers; an uncommitted file in a source repo is not a valid
-  entrypoint yet.
-- Do not encode live state (git status, branches, tool counts, running
-  services, installed plugins).
-- Keep the type set closed at the eight types unless a real record cannot be
-  represented. Do not add types, domains or tools speculatively; every declared
-  domain must have at least one record.
-- Keep the MCP surface small and read-only. No recommendation, install or
-  orchestration tools.
+- `registry/` is the only dataset. Don't commit generated exports (`registry.json`).
+- Records are pointers. Don't copy native manifest content (versions, keywords, tool lists, packages) into records; the model forbids unknown fields — don't loosen `extra="forbid"` to make data fit.
+- No machine-local paths in records: paths are relative to the source repository root. Checkout locations go to `verify-sources` on the command line only.
+- Point only at committed files. Run `verify-sources` against real checkouts after changing pointers.
+- Don't encode live state (git status, branches, tool counts, running services, installed plugins).
+- Keep the type set closed at the eight types unless a real record can't be represented. Don't add types or domains speculatively; every declared domain must have at least one record.
+- Plugins install from the `bouch-plugins` marketplace; a plugin record here is a pointer to it, not a second install route.
 
 ## Commands
 
@@ -30,12 +18,5 @@ as a static `/registry.json`. See README.md for the record format and surface.
 uv sync --group dev
 uv run pytest
 uv run bouch-registry validate
-uv run bouch-registry serve --port 8080
-scripts/inspector-smoke.sh http://127.0.0.1:8080/mcp
-scripts/remote-acceptance.sh https://registry.bouch.dev
+uv run bouch-registry search "<query>"
 ```
-
-Deployed as the Fly app `bouch-registry` at https://registry.bouch.dev — see
-README "Deployment". Deploy only through `.github/workflows/deploy.yml`, never
-`flyctl deploy` from a checkout. Do not publish to the MCP Registry or change
-bouch.dev DNS beyond the registry hostname without explicit approval.
