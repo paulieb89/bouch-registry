@@ -18,7 +18,7 @@
   "source": {
     "repository": "mcpfleet-obs",
     "url": "https://github.com/uk-agents/mcpfleet-obs",
-    "ref": "v0.6.0"
+    "ref": "d82dfa8e81c3cf53e8291ccce82fbc5d57f88ec1"
   },
   "entrypoints": [
     {
