@@ -2,36 +2,34 @@
   "id": "dev.bouch/bouch-agent-core",
   "type": "agent-plugin",
   "title": "bouch-agent-core",
-  "summary": "Portable Bouch methodology package. Consult when about to extend an agent harness with a new tool or integration, when an environment is unfamiliar or has drifted (recon), when writing or reviewing a project /prime, when deciding whether and how to freeze verified evidence, when authoring durable handoffs between sessions or agents, or when a needed capability should be discovered and installed (record-to-installed hop). Provider-neutral Skills plus shared references distilled from the cross-domain harness model.",
+  "summary": "Portable Bouch Skills. Consult when starting unfamiliar Bouch work or deciding where a fact, lesson or piece of evidence belongs, when an environment is unfamiliar or blocked by a missing capability (recon and extension), when writing or reviewing a project /prime, when freezing verified evidence, when writing a handoff between sessions or agents, when capturing session lessons, or when installing a Bouch capability.",
   "domains": ["agent-harness"],
-  "tags": ["methodology", "skills", "prime", "recon", "harness-extension", "evidence-freeze", "handoff", "capability-discovery", "observation-log", "claude-code", "codex"],
+  "tags": ["methodology", "skills", "routing", "prime", "recon", "capability-gap", "evidence-freeze", "handoff", "observation-log", "claude-code", "codex"],
   "lifecycle": "active",
   "source": {
     "repository": "bouch-agent-core",
     "url": "https://github.com/paulieb89/bouch-agent-core",
-    "ref": "v0.4.1"
+    "ref": "v0.5.0"
   },
   "native": {
     "spec": "agent-plugins",
     "manifest": "plugin.json"
   },
   "entrypoints": [
-    {"role": "contract", "path": "README.md", "title": "What the package is and is not"},
+    {"role": "contract", "path": "README.md", "title": "What the package is and how to install it"},
     {"role": "contract", "path": "AGENTS.md", "title": "Agent working contract for the package"},
     {"role": "contract", "path": "LICENSE", "title": "License"},
-    {"role": "skill", "path": "skills/harness-extension/SKILL.md", "title": "Harness extension discipline"},
-    {"role": "skill", "path": "skills/environment-recon/SKILL.md", "title": "Bounded environment recon"},
-    {"role": "skill", "path": "skills/prime-authoring/SKILL.md", "title": "Authoring a project /prime"},
+    {"role": "skill", "path": "skills/bouch-project-routing/SKILL.md", "title": "Bouch project routing: where facts and evidence belong"},
+    {"role": "skill", "path": "skills/capability-gap/SKILL.md", "title": "Recon and closing a proven capability gap"},
     {"role": "skill", "path": "skills/evidence-freeze/SKILL.md", "title": "Freezing verified evidence"},
-    {"role": "skill", "path": "skills/bouch-project-routing/SKILL.md", "title": "Bouch project routing"},
+    {"role": "skill", "path": "skills/prime-authoring/SKILL.md", "title": "Authoring a project /prime"},
     {"role": "skill", "path": "skills/handoff-authoring/SKILL.md", "title": "Authoring durable handoffs"},
-    {"role": "skill", "path": "skills/capability-act/SKILL.md", "title": "Registry record to installed capability"},
     {"role": "skill", "path": "skills/observation-log/SKILL.md", "title": "Capturing and promoting session lessons"},
+    {"role": "skill", "path": "skills/capability-act/SKILL.md", "title": "Installing a Bouch capability"},
     {"role": "knowledge", "path": "skills/handoff-authoring/references/TEMPLATE-handoff.md", "title": "Handoff templates"},
-    {"role": "contract", "path": "references/prime-contract.md", "title": "What a project /prime must satisfy"},
-    {"role": "knowledge", "path": "references/memory-placement.md", "title": "Which layer a fact belongs in"},
-    {"role": "knowledge", "path": "references/cross-domain-harness-model.md", "title": "Cross-domain harness model"},
-    {"role": "knowledge", "path": "references/derive-vs-persist.md", "title": "Derive vs persist"}
+    {"role": "knowledge", "path": "skills/evidence-freeze/references/candidate-evidence-pattern.md", "title": "Candidate/evidence pattern for workbenches"},
+    {"role": "knowledge", "path": "skills/observation-log/references/TEMPLATE-observations.md", "title": "Observation log template"},
+    {"role": "knowledge", "path": "skills/capability-act/references/harness-install-table.md", "title": "Install commands per harness"}
   ],
   "related": ["dev.bouch/agent-enumeration-lab", "dev.bouch/capability-routing-index"]
 }
